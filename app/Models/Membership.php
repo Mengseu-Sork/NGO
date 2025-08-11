@@ -32,5 +32,10 @@ class Membership extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function applications()
+    {
+        return $this->hasOne(MembershipApplication::class);
+    }
 }
 

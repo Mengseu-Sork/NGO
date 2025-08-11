@@ -115,6 +115,11 @@ class MembershipController extends Controller
 
             DB::commit();
 
+            if ($request->input('save_and_next') == '1') {
+            // Redirect to next page (replace with your actual route)
+                return redirect()->route('membership.formUpload')->with('success', 'Membership submitted successfully! Please upload your documents.');
+            }
+
             return redirect()->route('membership.thankyou')->with('success', 'Membership reconfirmation submitted successfully!');
         } catch (\Exception $e) {
             DB::rollback();

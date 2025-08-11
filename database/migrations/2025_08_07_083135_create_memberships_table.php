@@ -42,6 +42,46 @@ class CreateMembershipsTable extends Migration
             $table->string('phone');
             $table->timestamps();
         });
+
+        Schema::create('membership_applications', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('mailing_address')->nullable();
+            $table->string('physical_address')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('website')->nullable();
+
+            // Preferred communication channels stored as JSON
+            $table->json('comm_channels')->nullable();
+
+            // Phone numbers stored as JSON (keyed by channel)
+            $table->json('comm_phones')->nullable();
+
+            // File paths for uploads (store filenames or URLs)
+            $table->string('letter')->nullable();
+            $table->string('constitution')->nullable();
+            $table->string('activities')->nullable();
+            $table->string('funding')->nullable();
+            $table->string('registration')->nullable();
+            $table->string('strategic_plan')->nullable();
+            $table->string('fundraising_strategy')->nullable();
+            $table->string('audit_report')->nullable();
+            $table->string('signature')->nullable();
+
+            $table->text('vision')->nullable();
+            $table->text('mission')->nullable();
+            $table->text('goal')->nullable();
+            $table->text('objectives')->nullable();
+
+            $table->string('director_name')->nullable();
+            $table->string('title')->nullable();
+            $table->date('date')->nullable();
+
+            $table->foreignId('membership_id')->nullable()->constrained('memberships')->onDelete('cascade');
+
+
+            $table->timestamps();
+        });
     }
 
 
@@ -50,5 +90,6 @@ class CreateMembershipsTable extends Migration
         Schema::dropIfExists('membership_focal_points');
         Schema::dropIfExists('membership_networks');
         Schema::dropIfExists('memberships');
+        Schema::dropIfExists('membership_applications');
     }
 }
