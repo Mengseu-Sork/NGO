@@ -15,7 +15,7 @@
                 <div class="flex items-center space-x-12">
                     <a href="#" class="text-xl font-bold hover:text-green-300">NGOF Admin</a>
                     <a href="{{ route('admin.dashboard') }}" class="hover:text-green-300">Memberships</a>
-                    <a href="{{ route('admin.user') }}" class="hover:text-green-300">Users</a>
+                    <a href="{{ route('admin.user') }}" class="hover:text-green-300">No Membership</a>
                 </div>
                 <div>
                     <form method="POST" action="{{ route('logout') }}">

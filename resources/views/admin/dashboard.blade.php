@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-full mx-auto">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Memberships Dashboard</h1>
+        <h1 class="text-3xl font-bold text-gray-800">All Memberships</h1>
         <div class="text-sm text-gray-600">
             Total: {{ $memberships->total() }} submissions
         </div>
