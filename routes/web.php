@@ -6,6 +6,7 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MembershipApplicationController;
+use App\Http\Controllers\FileViewController;
 
 // Authentication routes
 Route::get('/', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -38,5 +39,17 @@ Route::middleware(['auth'])->group(function () {
     
     // Thank you page
     Route::get('/membership/thankyou', [MembershipController::class, 'thankyou'])->name('membership.thankyou');
+
+    // Membership management routes
+    Route::get('/admin/show/{id}', [AdminController::class, 'show'])->name('admin.show');
+
+    // Membership export routes
+    Route::get('/admin/export/excel', [MembershipController::class, 'exportExcel'])->name('memberships.exportExcel');
+    Route::get('/admin/export/pdf', [MembershipController::class, 'exportPDF'])->name('memberships.exportPDF');
+    Route::get('/admin/export/word', [MembershipController::class, 'exportWord'])->name('memberships.exportWord');
+    Route::get('/file-view/{path}', [FileViewController::class, 'viewFile'])
+    ->where('path', '.*')
+    ->name('file.view');
+
 });
 

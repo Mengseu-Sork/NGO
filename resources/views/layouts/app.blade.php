@@ -6,6 +6,7 @@
     <title>@yield('title', 'NGOF Admin')</title>
     <link rel="icon" href="/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 <body class="h-full flex flex-col">
 

@@ -35,7 +35,7 @@ class Membership extends Model
 
     public function applications()
     {
-        return $this->hasOne(MembershipApplication::class);
+        return $this->hasMany(MembershipApplication::class);
     }
 }
 

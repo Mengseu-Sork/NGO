@@ -49,6 +49,11 @@ class MembershipApplicationController extends Controller
             'date' => 'required|date',
         ]);
 
+        $membership = Membership::firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['membership_status' => 'pending'] // default or step-one values
+        );
+
         // Handle file uploads and store paths
         $data = $request->all();
 
@@ -74,8 +79,6 @@ class MembershipApplicationController extends Controller
                 $commPhones[$channel] = $request->input($phoneField);
             }
         }
-
-        $membership = Membership::where('user_id', auth()->id());
 
         $application = MembershipApplication::create([
             'mailing_address' => $request->input('mailing-address'),
@@ -104,7 +107,7 @@ class MembershipApplicationController extends Controller
             'director_name' => $request->input('director-name'),
             'title' => $request->input('title'),
             'date' => $request->input('date'),
-            'membership_id' => $membership ? $membership->id : null,
+            'membership_id' => $membership->id,
         ]);
 
         return redirect()->route('membership.thankyou')

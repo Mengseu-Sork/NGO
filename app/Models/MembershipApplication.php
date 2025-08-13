@@ -29,6 +29,7 @@ class MembershipApplication extends Model
         'director_name',
         'title',
         'date',
+        'membership_id',
     ];
 
     protected $casts = [
