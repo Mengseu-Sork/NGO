@@ -223,13 +223,8 @@
           </div>
 
           <div class="flex justify-end mt-10 gap-4">
-            <button type="submit" id="submitBtn" class="bg-green-700 hover:bg-green-800 text-white rounded-md px-8 py-3 font-semibold flex items-center gap-2" style="display:none;">
+            <button type="submit" id="submitBtn" class="bg-green-700 hover:bg-green-800 text-white rounded-md px-8 py-3 font-semibold flex items-center gap-2">
               <span>Submit</span>
-              <i class="fas fa-arrow-right"></i>
-            </button>
-
-            <button type="button" id="nextPageBtn" class="bg-green-600 hover:bg-green-700 text-white rounded-md px-8 py-3 font-semibold flex items-center gap-2" style="display:none;">
-              <span>Next</span>
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -319,36 +314,40 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const yesRadio = document.getElementById('more_info_yes');
-      const noRadio = document.getElementById('more_info_no');
+      const membershipRadios = document.querySelectorAll('input[name="membership"]');
+      const mainFields = document.getElementById('mainFormFields');
+      const yesMoreInfo = document.getElementById('more_info_yes');
+      const noMoreInfo = document.getElementById('more_info_no');
       const submitBtn = document.getElementById('submitBtn');
-      const nextPageBtn = document.getElementById('nextPageBtn');
-      const saveAndNextInput = document.getElementById('save_and_next');
-      const membershipForm = document.getElementById('membershipForm');
 
-      function toggleButtons() {
-        if (yesRadio.checked) {
-          submitBtn.style.display = 'none';
-          nextPageBtn.style.display = 'inline-flex';
-        } else if (noRadio.checked) {
-          submitBtn.style.display = 'inline-flex';
-          nextPageBtn.style.display = 'none';
-        } else {
-          submitBtn.style.display = 'none';
-          nextPageBtn.style.display = 'none';
-        }
+      function toggleMainFields() {
+          const selected = document.querySelector('input[name="membership"]:checked');
+          if (!selected) return;
+
+          if (selected.value === 'Yes') {
+              mainFields.style.display = '';
+          } else {
+              mainFields.style.display = 'none';
+              // auto-submit when "No"
+              document.getElementById('membershipForm').submit();
+          }
       }
 
-      yesRadio.addEventListener('change', toggleButtons);
-      noRadio.addEventListener('change', toggleButtons);
+      function toggleSubmit() {
+          if (yesMoreInfo.checked || noMoreInfo.checked) {
+              submitBtn.style.display = 'inline-flex';
+          } else {
+              submitBtn.style.display = 'none';
+          }
+      }
 
-      toggleButtons();
+      membershipRadios.forEach(radio => radio.addEventListener('change', toggleMainFields));
+      yesMoreInfo.addEventListener('change', toggleSubmit);
+      noMoreInfo.addEventListener('change', toggleSubmit);
 
-      nextPageBtn.addEventListener('click', () => {
-        // Set hidden input flag before submit
-        saveAndNextInput.value = '1';
-        membershipForm.submit();
-      });
+      // initialize
+      toggleMainFields();
+      toggleSubmit();
     });
   </script>
 </body>

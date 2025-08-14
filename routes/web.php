@@ -25,6 +25,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     });
 
+    // User profile routes
+    Route::get('/profile', [UserController::class, 'profile'])
+    ->name('profile');
+
+
     // Membership main form routes
     Route::get('/membership/form', [MembershipController::class, 'showForm'])->name('membership.form');
     Route::post('/membership/form', [MembershipController::class, 'submitReconfirmation'])->name('membership.submit'); 

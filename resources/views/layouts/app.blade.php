@@ -14,9 +14,25 @@
         <div class="max-w-full mx-auto px-6">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-12">
-                    <a href="#" class="text-xl font-bold hover:text-green-300">NGOF Admin</a>
-                    <a href="{{ route('admin.dashboard') }}" class="hover:text-green-300">Memberships</a>
-                    <a href="{{ route('admin.user') }}" class="hover:text-green-300">No Membership</a>
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.dashboard') }}" 
+                        class="text-xl font-bold hover:text-green-300">
+                            NGOF Admin
+                        </a>
+                        <a href="{{ route('admin.dashboard') }}" 
+                        class="hover:text-green-300 {{ request()->routeIs('admin.dashboard') ? 'border-b-2 border-white pb-1' : '' }}">
+                            Memberships
+                        </a>
+                        <a href="{{ route('admin.user') }}" 
+                        class="hover:text-green-300 {{ request()->routeIs('admin.user') ? 'border-b-2 border-white pb-1' : '' }}">
+                            No Membership
+                        </a>
+                    @elseif(auth()->user()->role === 'user')
+                        <a href="{{ route('profile') }}" 
+                        class="text-xl font-bold hover:text-green-300">
+                            My Profile
+                        </a>
+                    @endif
                 </div>
                 <div>
                     <form method="POST" action="{{ route('logout') }}">
@@ -29,6 +45,7 @@
             </div>
         </div>
     </nav>
+
 
     <!-- Main Content -->
     <main class="flex-grow px-6 py-8">

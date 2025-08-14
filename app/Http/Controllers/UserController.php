@@ -17,4 +17,14 @@ class UserController extends Controller
 
         return view('admin.user', compact('memberships'));
     }
+
+    public function profile()
+    {
+        $memberships = Membership::with('user', 'networks', 'focalPoints')
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('users.profile', compact('memberships'));
+    }
 }

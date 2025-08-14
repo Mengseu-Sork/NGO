@@ -16,13 +16,39 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
-            'name' => 'Vicheth Chan', 
-            'ngo' => 'NGO Forum Cambodia',
-            'email' => 'support@ngoforum.org.kh',
-            'role' => 'admin',
-            'password' => Hash::make('UnifiP@$$w0rd')
-        ]);
+        $admins = [
+            // [
+            //     'name' => 'Vicheth Chan',
+            //     'ngo' => 'NGO Forum Cambodia',
+            //     'email' => 'support@ngoforum.org.kh',
+            //     'role' => 'admin',
+            //     'password' => 'UnifiP@$$w0rd'
+            // ],
+            [
+                'name' => 'Vicheth Chan',
+                'ngo' => 'NGO Forum Cambodia',
+                'email' => 'vicheth@ngoforum.org.kh',
+                'role' => 'admin',
+                'password' => 'NecaAwg*2023'
+            ],
+            [
+                'name' => 'Mengseu Sork',
+                'ngo' => 'NGO Forum Cambodia',
+                'email' => 'mengseu.sork@student.passerellesnumeriques.org',
+                'role' => 'admin',
+                'password' => '123456789'
+            ]
+        ];
+
+        foreach ($admins as $admin) {
+            User::create([
+                'name' => $admin['name'],
+                'ngo' => $admin['ngo'],
+                'email' => $admin['email'],
+                'role' => $admin['role'],
+                'password' => Hash::make($admin['password']),
+            ]);
+        }
     }
 }
 

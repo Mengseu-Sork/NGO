@@ -163,9 +163,9 @@
         }
     </style>
 
-    <div class="min-h-screen max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen max-w-full mx-auto">
         <div class="bg-white shadow-sm border-b border-gray-200">
-            <div class="max-w-5xl mx-auto py-6 px-2 sm:px-6 lg:px-4">
+            <div class="max-w-full mx-auto py-6 px-2 sm:px-6 lg:px-4">
                 <div class="border-b border-gray-200 pb-4">
                     <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
                         {{ $membership->ngo_name ?? 'N/A' }}
@@ -176,7 +176,7 @@
                 </div>
 
 
-                <div class="max-w-6xl mx-auto py-4">
+                <div class="max-w-full mx-auto py-4">
                     <!-- Overview Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="overview-card rounded-xl card-shadow border border-gray-200 p-6 animate-fade-in">
@@ -248,12 +248,14 @@
                             <div class="p-6">
                                 @if ($membership->networks->count())
                                     <div class="space-y-3">
-                                        @foreach ($membership->networks as $network)
-                                            <div class="network-item flex items-center gap-3 p-3 rounded-lg">
-                                                <div class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                                                <span class="text-gray-800 font-medium">{{ $network->network_name }}</span>
-                                            </div>
-                                        @endforeach
+                                        <div class=" grid grid-cols-1 lg:grid-cols-2 gap-3">
+                                            @foreach ($membership->networks as $network)
+                                                <div class="network-item flex items-center gap-3 p-3 rounded-lg">
+                                                    <div class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
+                                                    <span class="text-gray-800 font-medium">{{ $network->network_name }}</span>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 @else
                                     <p class="text-gray-600 italic">No networks available.</p>
@@ -279,15 +281,15 @@
                             <div class="p-6">
                                 @if ($membership->focalPoints->count())
                                     <div class="space-y-4">
-                                        @foreach ($membership->focalPoints as $focal)
-                                            <div class=" grid grid-cols-1 lg:grid-cols-2 gap-2">
+                                        <div class=" grid grid-cols-1 lg:grid-cols-2 gap-3">
+                                            @foreach ($membership->focalPoints as $focal)
                                                 <div class="focal-point-card p-4 rounded-lg">
                                                     <h4 class="font-semibold text-gray-900">{{ $focal->name }}</h4>
                                                     <p class="text-gray-600 font-medium">{{ $focal->position }}</p>
                                                     <p class="text-gray-700 text-sm">{{ $focal->network_name }}</p>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 @else
                                     <p class="text-gray-600 italic">No focal points available.</p>

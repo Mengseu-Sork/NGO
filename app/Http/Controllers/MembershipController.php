@@ -14,6 +14,12 @@ use App\Exports\MembershipsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
+use App\Mail\MembershipYesEmail;
+use App\Mail\MembershipAdminEmail;
+use App\Mail\MembershipDeclinedEmail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class MembershipController extends Controller
 {
@@ -53,12 +59,39 @@ class MembershipController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // If membership is "No", skip extra fields
+        
         if ($request->membership === 'No') {
-            Membership::create([
+            // Create membership record (store only status and link to user)
+            $membership = Membership::create([
                 'user_id' => Auth::id(),
                 'membership_status' => false, // No
+                'ngo_name' => null,
+                'director_name' => null,
+                'director_phone' => null,
+                'director_email' => null,
+                'alt_name' => null,
+                'alt_phone' => null,
+                'alt_email' => null,
+                'more_info' => null,
             ]);
+
+            // Get user info via user_id
+            $user = $membership->user;
+
+            // Log for debugging
+            Log::info('Membership declined created', [
+                'name' => $user->name,
+                'email' => $user->email,
+                'ngo' => $user->ngo,
+            ]);
+
+            // Send email to admins
+            try {
+                $admins = User::where('role', 'admin')->pluck('email');
+                Mail::to($admins->toArray())->send(new MembershipDeclinedEmail($user));
+            } catch (\Exception $e) {
+                Log::error('Failed to send "No" membership email: ' . $e->getMessage());
+            }
 
             return redirect()->route('membership.thankyou');
         }
@@ -122,9 +155,24 @@ class MembershipController extends Controller
 
             DB::commit();
 
-            if ($request->input('save_and_next') == '1') {
-            // Redirect to next page (replace with your actual route)
-                return redirect()->route('membership.formUpload')->with('success', 'Membership submitted successfully! Please upload your documents.');
+            $membershipConfirmed = in_array($request->membership, ['Yes', 1, '1'], true);
+            $moreInfoAgreed = in_array($request->more_info, ['Yes', 1, '1'], true);
+            $deadline = now()->addDays(15);
+            $admins = User::where('role', 'admin')->pluck('email');
+
+            try {
+                if ($membershipConfirmed && $moreInfoAgreed) {
+                    Mail::to($request->director_email)
+                        ->send(new MembershipYesEmail($membership, $deadline, $admins));
+                }
+                
+                if ($membershipConfirmed) {
+                    Log::info('Sending admin email to: ' . implode(', ', $admins->toArray()));
+                    Mail::to($admins->toArray())
+                        ->send(new MembershipAdminEmail($membership));
+                }
+            } catch (\Exception $e) {
+                Log::error('Email send failed: ' . $e->getMessage());
             }
 
             return redirect()->route('membership.thankyou')->with('success', 'Membership reconfirmation submitted successfully!');

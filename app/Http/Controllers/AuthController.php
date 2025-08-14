@@ -50,11 +50,25 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Check role after login
             if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin.dashboard');
+            }
+
+            $hasMembership = \App\Models\Membership::where('user_id', Auth::id())->exists();
+
+            $hasApp = \App\Models\MembershipApplication::whereHas('membership', function ($query) {
+                $query->where('user_id', Auth::id());
+            })->exists();
+
+            if ($hasApp && $hasMembership) {
+                // User completed both forms → Profile
+                return redirect()->route('profile');
+            } elseif ($hasMembership) {
+                // User has membership but no application yet → Form 2
+                return redirect()->route('membership.formUpload');
             } else {
-                return redirect()->route('membership.form'); // User route
+                // No membership yet → Form 1
+                return redirect()->route('membership.form');
             }
         }
 

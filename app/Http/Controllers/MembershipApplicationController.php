@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\MembershipApplication;
 use App\Models\Membership;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\MembershipUserEmail;
+use App\Mail\MembershipAdminEmail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class MembershipApplicationController extends Controller
 {
@@ -63,6 +68,15 @@ class MembershipApplicationController extends Controller
             'audit-report', 'signature',
         ];
 
+        $rules = [];
+        foreach ($fileFields as $field) {
+            $rules[$field] = 'nullable|file|max:10240'; // 10240 KB = 10 MB
+        }
+
+        $request->validate($rules);
+
+        $data = [];
+
         foreach ($fileFields as $field) {
             if ($request->hasFile($field)) {
                 $path = $request->file($field)->store('uploads/membership', 'public');
@@ -109,7 +123,23 @@ class MembershipApplicationController extends Controller
             'date' => $request->input('date'),
             'membership_id' => $membership->id,
         ]);
+        
+        $userEmail = auth()->user()->email;
 
+        // ✅ Get all admin emails
+        $admins = User::where('role', 'admin')->pluck('email');
+
+        try {
+            // Send confirmation to user
+            Mail::to($userEmail)->send(new MembershipUserEmail($application, $admins, $membership));
+
+            // Send notification to admins
+            Mail::to($admins->toArray())
+                        ->send(new MembershipAdminEmail($application));
+
+        } catch (\Exception $e) {
+            Log::error('Email send failed: ' . $e->getMessage());
+        }
         return redirect()->route('membership.thankyou')
             ->with('success', 'Membership application submitted successfully!');
     }
