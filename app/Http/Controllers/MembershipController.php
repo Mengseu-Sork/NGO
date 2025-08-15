@@ -129,6 +129,8 @@ class MembershipController extends Controller
                 'alt_email' => $request->alt_email,
                 'more_info' => $request->more_info === 'Yes',
                 'user_id' => auth()->id(),
+                'deadline' => now()->addDays(1),
+                'status' => 'pending', // Default status
             ]);
 
             $membershipId = $membership->id;

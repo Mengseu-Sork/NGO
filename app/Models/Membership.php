@@ -10,7 +10,7 @@ class Membership extends Model
     protected $fillable = [
         'ngo_name', 'director_name', 'director_phone', 'director_email',
         'alt_name', 'alt_phone', 'alt_email',
-        'membership_status', 'more_info', 'user_id',
+        'membership_status', 'more_info', 'user_id', 'deadline', 'status'
     ];
 
     protected $casts = [

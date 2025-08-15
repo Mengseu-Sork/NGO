@@ -17,13 +17,13 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $admins = [
-            // [
-            //     'name' => 'Vicheth Chan',
-            //     'ngo' => 'NGO Forum Cambodia',
-            //     'email' => 'support@ngoforum.org.kh',
-            //     'role' => 'admin',
-            //     'password' => 'UnifiP@$$w0rd'
-            // ],
+            [
+                'name' => 'NGOFC Admin',
+                'ngo' => 'NGO Forum Cambodia',
+                'email' => 'support@ngoforum.org.kh',
+                'role' => 'admin',
+                'password' => 'UnifiP@$$w0rd'
+            ],
             [
                 'name' => 'Vicheth Chan',
                 'ngo' => 'NGO Forum Cambodia',
@@ -32,12 +32,12 @@ class AdminSeeder extends Seeder
                 'password' => 'NecaAwg*2023'
             ],
             [
-                'name' => 'Mengseu Sork',
+                'name' => 'Saroeun Chhun',
                 'ngo' => 'NGO Forum Cambodia',
-                'email' => 'mengseu.sork@student.passerellesnumeriques.org',
+                'email' => 'saroeun@ngoforum.org.kh',
                 'role' => 'admin',
-                'password' => '123456789'
-            ]
+                'password' => 'NecaAwg*2023'
+            ],
         ];
 
         foreach ($admins as $admin) {

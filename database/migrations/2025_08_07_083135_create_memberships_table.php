@@ -20,6 +20,7 @@ class CreateMembershipsTable extends Migration
             $table->boolean('membership_status'); // true for yes, false for no
             $table->boolean('more_info')->nullable();  // Make nullable, if not always required
             $table->unsignedBigInteger('user_id'); // Add user_id to link membership to user
+            $table->enum('status', ['pending', 'completed'])->default('pending');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

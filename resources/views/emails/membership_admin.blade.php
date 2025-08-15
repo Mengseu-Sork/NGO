@@ -9,7 +9,10 @@
     <li><strong>Email:</strong> {{ $membership->director_email }}</li>
 </ul>
 
-<p>Please review the membership and take any necessary actions.</p>
+<p>
+    Please review the membership and take any necessary actions.  
+    <a href="{{ route('admin.dashboard') }}">View Membership</a>
+</p>
 
 <p>Thank you,</p>
 <p>NGOF Team</p>
