@@ -38,6 +38,14 @@ class AdminSeeder extends Seeder
                 'role' => 'admin',
                 'password' => 'NecaAwg*2023'
             ],
+            // [
+            //     'name' => 'NGOF Admin',
+            //     'ngo' => 'NGO Forum Cambodia',
+            //     'email' => 'mengseu.sork@student.passerellesnumeriques.org',
+            //     'role' => 'admin',
+            //     'password' => '123456789'
+            // ],
+
         ];
 
         foreach ($admins as $admin) {

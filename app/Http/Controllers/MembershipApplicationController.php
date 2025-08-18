@@ -7,7 +7,7 @@ use App\Models\MembershipApplication;
 use App\Models\Membership;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\MembershipUserEmail;
-use App\Mail\MembershipAdminEmail;
+use App\Mail\MembershipEmail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
@@ -135,7 +135,7 @@ class MembershipApplicationController extends Controller
 
             // Send notification to admins
             Mail::to($admins->toArray())
-                        ->send(new MembershipAdminEmail($application));
+                        ->send(new MembershipEmail($application, $membership));
 
         } catch (\Exception $e) {
             Log::error('Email send failed: ' . $e->getMessage());

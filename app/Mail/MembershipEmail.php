@@ -5,8 +5,9 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MembershipAdminEmail extends Mailable
+class MembershipEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,6 +23,10 @@ class MembershipAdminEmail extends Mailable
     public function build()
     {
         return $this->subject('New Membership Application Submitted')
-                    ->view('emails.membership_email');
+                    ->view('emails.membership_email')
+                    ->with([
+                        'application' => $this->application,
+                        'membership' => $this->membership,
+                    ]);
     }
 }
