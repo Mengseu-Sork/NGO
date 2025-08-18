@@ -11,10 +11,12 @@ class MembershipAdminEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $application;
+    public $membership;
 
-    public function __construct($application)
+    public function __construct($application, $membership)
     {
         $this->application = $application;
+        $this->membership = $membership;
     }
 
     public function build()

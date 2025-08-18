@@ -184,6 +184,12 @@ class MembershipController extends Controller
         }
     }
 
+    public function formUpload($id)
+    {
+        $membership = Membership::findOrFail($id);
+        return view('membership.formUpload', compact('membership'));
+    }
+
     public function thankyou()
     {
         return view('membership.thankyou');

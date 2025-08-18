@@ -1,14 +1,18 @@
-<p>Dear Admin,</p>
+<p style="color:#000;font-family:Arial, sans-serif;">Dear Admin,</p>
 
-<p>The following individual has informed us that their organization will not be continuing its membership with NGOF.</p>
+<p style="color:#000;font-family:Arial, sans-serif;">
+    The following individual has informed us that their organization will not be continuing its membership with NGOF.
+</p>
 
-<ul>
-    <li><strong>Name:</strong> {{ $name }}</li>
-    <li><strong>Email:</strong> {{ $email }}</li>
-    <li><strong>NGO:</strong> {{ $ngo }}</li>
+<ul style="color:#000;font-family:Arial, sans-serif;">
+    <li><strong>Name:</strong> {{ $name ?? 'N/A' }}</li>
+    <li><strong>Email:</strong> {{ $email ?? 'N/A' }}</li>
+    <li><strong>NGO:</strong> {{ $ngo ?? 'N/A' }}</li>
 </ul>
 
-<p>Please note this response for your records and any necessary follow-up.</p>
+<p style="color:#000;font-family:Arial, sans-serif;">
+    Please note this response for your records and take any necessary follow-up actions.
+</p>
 
-<p>Thank you,</p>
-<p>NGOF Team</p>
+<p style="color:#000;font-family:Arial, sans-serif;">Thank you,</p>
+<p style="color:#000;font-family:Arial, sans-serif;">NGOF Team</p>

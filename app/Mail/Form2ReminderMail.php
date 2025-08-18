@@ -10,13 +10,11 @@ class Form2ReminderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    public $formLink;
+    public $membership;
 
-    public function __construct($user, $formLink)
+    public function __construct($membership)
     {
-        $this->user = $user;
-        $this->formLink = $formLink;
+        $this->membership = $membership;
     }
 
     public function build()
@@ -24,7 +22,8 @@ class Form2ReminderMail extends Mailable
         return $this->subject('Reminder: Please Complete Your Membership Form (Phase 2)')
                     ->markdown('emails.form2_reminder')
                     ->with([
-                        'formLink' => $this->formLink
+                        'user' => $this->membership->user,
+                        'formLink' => route('membership.formUpload.id', $this->membership->id),
                     ]);
     }
 }

@@ -1,21 +1,30 @@
-@component('mail::message')
-# Dear {{ $user->name }},
+<p style="color:#000;font-family:Arial, sans-serif;">Dear {{ $user->name ?? 'Member' }},</p>
 
-We hope this message finds you well.
+<p style="color:#000;font-family:Arial, sans-serif;">
+    We hope this message finds you well.
+</p>
 
-Our records indicate that you have **not yet completed Form (Phase 2)** of your membership application.  
-Please complete it as soon as possible to avoid delays in processing your membership.
+<p style="color:#000;font-family:Arial, sans-serif;">
+    Our records indicate that you have <strong>not yet completed Form (Phase 2)</strong> of your membership application.<br>
+    Please complete it <strong>as soon as possible</strong> to avoid delays in processing your membership.
+</p>
 
-@component('mail::button', ['url' => route('membership.formUpload')])
-Complete Form (Phase 2)
-@endcomponent
+<p>
+    <a href="{{ $formLink ?? '#' }}" target="_blank" 
+       style="display:inline-block;padding:10px 20px;background-color:#3490dc;color:#ffffff;text-decoration:none;border-radius:5px;"
+       aria-label="Complete Phase 2 Form">
+       Complete Form (Phase 2)
+    </a>
+</p>
 
-Thank you for your attention to this matter.
+<p style="color:#000;font-family:Arial, sans-serif;">
+    Thank you for your attention to this matter.
+</p>
 
-Best regards,  
-NGOF Team  
-Led by CHAN Vicheth  
-Program Manager  
-NGO Forum on Cambodia
-@endcomponent
-
+<p style="color:#000;font-family:Arial, sans-serif;">
+    Best regards,<br>
+    NGOF Team<br>
+    Led by CHAN Vicheth<br>
+    Program Manager<br>
+    NGO Forum on Cambodia
+</p>

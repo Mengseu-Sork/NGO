@@ -17,11 +17,11 @@ class SendForm2Reminder extends Command
 
     public function handle()
     {
-        $cutoffDate = Carbon::now()->subDays(15);
+        $cutoffDate = Carbon::now()->subDays(1);
 
         $overdueMemberships = Membership::where('status', 'pending')
-            ->whereDate('created_at', '<=', $cutoffDate)
-            ->with('user') // Make sure Membership model has user() relationship
+            ->whereDate('deadline', '<=', now())
+            ->with('user')
             ->get();
 
         if ($overdueMemberships->isEmpty()) {
@@ -31,10 +31,8 @@ class SendForm2Reminder extends Command
 
         // Send reminder to each user with link
         foreach ($overdueMemberships as $membership) {
-            $formLink = route('membership.formUpload', $membership->id); // Your route for Form 2
-
             Mail::to($membership->user->email)
-                ->send(new Form2ReminderMail($membership->user, $formLink));
+                ->send(new Form2ReminderMail($membership));
         }
 
         // Send list to all admins

@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
     {
         $admins = [
             [
-                'name' => 'NGOFC Admin',
+                'name' => 'NGOF Admin',
                 'ngo' => 'NGO Forum Cambodia',
                 'email' => 'support@ngoforum.org.kh',
                 'role' => 'admin',

@@ -1,15 +1,18 @@
-@component('mail::message')
-Dear Admin,
+<p style="color:#000;font-family:Arial, sans-serif;">Dear Admin,</p>
 
-The following NGOs have **not completed Form (Pheas 2)** of their membership application within the required 15-day period:
+<p style="color:#000;font-family:Arial, sans-serif;">
+    The following NGOs have <strong>not completed Form (Phase 2)</strong> of their membership application within the required 15-day period:
+</p>
 
 @foreach ($overdueMemberships as $membership)
-Name NGO: **{{ $membership->ngo_name }}**  
+    <p style="color:#000;font-family:Arial, sans-serif;">
+        Name NGO: <strong>{{ $membership->ngo_name }}</strong>
+    </p>
 @endforeach
 
-Please follow up with these organizations to ensure their applications are completed promptly.
+<p style="color:#000;font-family:Arial, sans-serif;">
+    Please follow up with these organizations to ensure their applications are completed promptly.
+</p>
 
-Best regards,  
-**NGO Forum on Cambodia**  
-Membership Management System
-@endcomponent
+<p style="color:#000;font-family:Arial, sans-serif;">Thank you,</p>
+<p style="color:#000;font-family:Arial, sans-serif;">NGOF Team</p>

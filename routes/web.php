@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     // Membership application upload routes
     Route::get('/membership/formUpload', [MembershipApplicationController::class, 'showForm'])->name('membership.formUpload');
     Route::post('/membership/formUpload', [MembershipApplicationController::class, 'submit'])->name('membership.submitUpload');
+    Route::get('/membership/formUpload/{id}', [MembershipApplicationController::class, 'showForm'])->name('membership.formUpload.id');
 
     // Membership reconfirmation routes (if different from main form)
     Route::get('/membership/reconfirm', [MembershipController::class, 'showFormReconfirm'])->name('membership.reconfirm.form');
