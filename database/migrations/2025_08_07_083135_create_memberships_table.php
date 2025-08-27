@@ -88,9 +88,9 @@ class CreateMembershipsTable extends Migration
 
     public function down()
     {
+        Schema::dropIfExists('membership_applications');
         Schema::dropIfExists('membership_focal_points');
         Schema::dropIfExists('membership_networks');
         Schema::dropIfExists('memberships');
-        Schema::dropIfExists('membership_applications');
     }
 }

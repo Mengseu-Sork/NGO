@@ -54,21 +54,32 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
-            $hasMembership = \App\Models\Membership::where('user_id', Auth::id())->exists();
+            if (Auth::user()->role === 'user') {
+                $userInput = Auth::user()->ngo; // User can type either full name or abbreviation
 
-            $hasApp = \App\Models\MembershipApplication::whereHas('membership', function ($query) {
-                $query->where('user_id', Auth::id());
-            })->exists();
+                $ngoExists = \App\Models\Ngo::where('ngo_name', $userInput)
+                    ->orWhere('abbreviation', $userInput)
+                    ->exists();
 
-            if ($hasApp && $hasMembership) {
-                // User completed both forms → Profile
-                return redirect()->route('profile');
-            } elseif ($hasMembership) {
-                // User has membership but no application yet → Form 2
-                return redirect()->route('membership.formUpload');
-            } else {
-                // No membership yet → Form 1
-                return redirect()->route('membership.form');
+                if (!$ngoExists) {
+                    // If no matching NGO name found → redirect to membershipDetail page
+                    return redirect()->route('membership.menbershipDetail');
+                }
+
+                // If NGO exists, continue with existing logic
+                $hasMembership = \App\Models\Membership::where('user_id', Auth::id())->exists();
+
+                $hasApp = \App\Models\MembershipApplication::whereHas('membership', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })->exists();
+
+                if ($hasApp && $hasMembership) {
+                    return redirect()->route('profile');
+                } elseif ($hasMembership) {
+                    return redirect()->route('membership.formUpload');
+                } else {
+                    return redirect()->route('membership.form');
+                }
             }
         }
 

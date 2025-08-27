@@ -17,34 +17,34 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $admins = [
-            [
-                'name' => 'NGOF Admin',
-                'ngo' => 'NGO Forum Cambodia',
-                'email' => 'support@ngoforum.org.kh',
-                'role' => 'admin',
-                'password' => 'UnifiP@$$w0rd'
-            ],
-            [
-                'name' => 'Vicheth Chan',
-                'ngo' => 'NGO Forum Cambodia',
-                'email' => 'vicheth@ngoforum.org.kh',
-                'role' => 'admin',
-                'password' => 'NecaAwg*2023'
-            ],
-            [
-                'name' => 'Saroeun Chhun',
-                'ngo' => 'NGO Forum Cambodia',
-                'email' => 'saroeun@ngoforum.org.kh',
-                'role' => 'admin',
-                'password' => 'NecaAwg*2023'
-            ],
             // [
             //     'name' => 'NGOF Admin',
             //     'ngo' => 'NGO Forum Cambodia',
-            //     'email' => 'mengseu.sork@student.passerellesnumeriques.org',
+            //     'email' => 'support@ngoforum.org.kh',
             //     'role' => 'admin',
-            //     'password' => '123456789'
+            //     'password' => 'UnifiP@$$w0rd'
             // ],
+            // [
+            //     'name' => 'Vicheth Chan',
+            //     'ngo' => 'NGO Forum Cambodia',
+            //     'email' => 'vicheth@ngoforum.org.kh',
+            //     'role' => 'admin',
+            //     'password' => 'NecaAwg*2023'
+            // ],
+            // [
+            //     'name' => 'Saroeun Chhun',
+            //     'ngo' => 'NGO Forum Cambodia',
+            //     'email' => 'saroeun@ngoforum.org.kh',
+            //     'role' => 'admin',
+            //     'password' => 'NecaAwg*2023'
+            // ],
+            [
+                'name' => 'NGOF Admin',
+                'ngo' => 'NGO Forum Cambodia',
+                'email' => 'mengseu.sork@student.passerellesnumeriques.org',
+                'role' => 'admin',
+                'password' => '123456789'
+            ],
 
         ];
 

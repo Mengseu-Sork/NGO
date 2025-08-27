@@ -20,6 +20,25 @@ class AdminController extends Controller
 
     public function index()
     {
+        $totalNew     = 20;
+        $totalAccept  = 15;
+        $totalRequest = 8;
+        $totalCancel  = 5;
+        $totalMembership  = 8;
+
+        // Fake monthly data
+        $months = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        $monthlyData = [50, 200, 300, 250, 500, 280, 400, 260, 520];
+
+        return view('admin.dashboard', compact(
+            'totalNew', 'totalAccept', 'totalRequest', 'totalCancel',
+            'months', 'monthlyData', 'totalMembership'
+        ));
+    }
+
+
+    public function membershipShow()
+    {
         if (auth()->user()->role !== 'admin') {
             abort(403);
         }
@@ -29,7 +48,7 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('admin.dashboard', compact('memberships'));
+        return view('admin.membership', compact('memberships'));
     }
 
     public function show($id)

@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->hasOne(Membership::class);
     }
 
+    public function newMemberships()
+    {
+        return $this->hasOne(NewMembership::class);
+    }
+
     protected $hidden = [
         'password',
         'remember_token',

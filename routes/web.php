@@ -7,13 +7,19 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MembershipApplicationController;
 use App\Http\Controllers\FileViewController;
+use App\Http\Controllers\homeController;
+use App\Http\Controllers\MembershipDetailController;
+use App\Http\Controllers\NewMembershipController;
+use App\Http\Controllers\MembershipUploadController;
+
 
 // Authentication routes
-Route::get('/', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/', [AuthController::class, 'register']);
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/', [homeController::class, 'index'])->name('home');
 
 
 
@@ -23,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('user');
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/membership', [AdminController::class, 'membershipShow'])->name('membership');
     });
 
     // User profile routes
@@ -56,6 +63,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/file-view/{path}', [FileViewController::class, 'viewFile'])
     ->where('path', '.*')
     ->name('file.view');
+
+    // Membership detail route
+    Route::get('/membership/menbershipDetail', [MembershipDetailController::class, 'index'])->name('membership.menbershipDetail');
+
+    // New Membership form routes
+    Route::get('/membership/membershipForm', [NewMembershipController::class, 'form'])->name('membership.membershipForm');
+    Route::post('/membership/membershipForm', [NewMembershipController::class, 'storeForm'])->name('memberships.storeForm');
+
+    // New Membership form Upload
+    Route::get('/membership/membershipUpload', [MembershipUploadController::class, 'form'])->name('membership.membershipUpload');
+    Route::post('/membership/membershipUpload', [MembershipUploadController::class, 'store'])->name('memberships.store');
+
 
 });
 
