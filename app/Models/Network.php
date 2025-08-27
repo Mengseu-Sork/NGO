@@ -9,7 +9,7 @@ class Network extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['new_membership_id', 'network_name'];
+    protected $fillable = ['membership_upload_id', 'network_name'];
 
     public function newMembership()
     {

@@ -31,7 +31,7 @@ return new class extends Migration
         // membership_networks table
         Schema::create('networks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('new_membership_id')->constrained()->onDelete('cascade');
+            $table->foreignId('membership_upload_id')->constrained()->onDelete('cascade');
             $table->string('network_name');
             $table->timestamps();
         });
@@ -39,7 +39,7 @@ return new class extends Migration
         // membership_focal_points table
         Schema::create('focal_points', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('new_membership_id')->constrained()->onDelete('cascade');
+            $table->foreignId('membership_upload_id')->constrained()->onDelete('cascade');
             $table->string('network_name');
             $table->string('name');
             $table->string('sex');
