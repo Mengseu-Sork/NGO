@@ -15,10 +15,16 @@ class NewMembership extends Model
         'representative_email', 'representative_phone', 'representative_position','user_id', 
     ];
 
-    // Define any relationships if necessary
+    public function membershipUploads()
+    {
+        return $this->hasMany(MembershipUpload::class);
+    }
+
+    // The user who created the membership
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
 
 }

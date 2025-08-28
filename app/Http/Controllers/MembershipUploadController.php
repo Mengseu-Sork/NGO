@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MembershipUpload;
 use Illuminate\Http\Request;
+use App\Models\NewMembership;
 
 class MembershipUploadController extends Controller
 {
@@ -38,7 +39,10 @@ class MembershipUploadController extends Controller
         }
 
         // Save membership
-        $membership = MembershipUpload::create($validated);
+        $latestMembership = NewMembership::latest()->first();
+        $membership = MembershipUpload::create(array_merge($validated, [
+            'new_membership_id' => $latestMembership->id ?? null, // fallback if none
+        ]));
 
         // Save networks + focal points
         if ($request->has('networks')) {

@@ -3,13 +3,13 @@
 @section('title', 'Memberships Dashboard')
 
 @section('content')
-    <div class="max-w-full mx-auto py-2">
+    <div class="max-w-full mx-auto">
         <div class="flex justify-between items-center mb-4">
             {{-- Breadcrumbs --}}
             {{-- Page Title --}}
-            <h1 class="text-3xl font-extrabold mb-10 text-green-900">All Memberships</h1>
+            <h1 class="text-xl md:text-3xl font-semibold text-green-700">All Memberships</h1>
             {{-- Tailwind Export Dropdown --}}
-            <div x-data="{ open: false }" class="relative inline-block text-left mb-4">
+            <div x-data="{ open: false }" class="relative inline-block text-left">
                 <button @click="open = !open" type="button"
                     class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-green-600 text-white text-sm font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     aria-haspopup="true" :aria-expanded="open.toString()">
@@ -64,53 +64,53 @@
         {{-- Memberships Table --}}
         @if ($memberships->count())
             <div class="overflow-x-auto rounded-lg shadow ring-1 ring-black ring-opacity-5">
-                <table class="min-w-full divide-y divide-gray-200 bg-white">
-                    <thead class="bg-gray-50">
+                <table class="min-w-full divide-y divide-green-500 bg-white">
+                    <thead class="bg-green-600 text-white">
                         <tr>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 ID</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 NGO Name</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Director</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Email</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Position</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Networks</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Date</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Applications</th>
                             <th
-                                class="px-6 py-3 text-left text-xs font-semibold text-white bg-green-600 uppercase tracking-wider">
+                                class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Action</th>
                         </tr>
                     </thead>
 
-                    <tbody class="divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y divide-green-200">
                         @foreach ($memberships as $membership)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-normal text-sm font-medium text-gray-900">
-                                    {{ $loop->iteration }}</td>
-                                <td class="px-6 py-4 whitespace-normal text-sm font-medium text-gray-900">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-normal text-sm border text-gray-700">
+                                    000{{ $loop->iteration }}</td>
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-normal text-sm border text-gray-700">
                                     {{ $membership->ngo_name ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-normal text-sm text-gray-700">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-normal text-sm border text-gray-700">
                                     {{ $membership->director_name ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-nowrap text-sm border text-gray-700">
                                     {{ $membership->director_email ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-nowrap text-sm border text-gray-700">
                                     {{ $membership->alt_name ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-normal text-sm max-h-26 overflow-y-auto text-gray-700">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-normal text-sm border max-h-26 overflow-y-auto text-gray-700">
                                     @if ($membership->networks->count())
                                         <ul class="list-disc list-inside space-y-1 max-h-28 overflow-auto">
                                             @foreach ($membership->networks as $network)
@@ -121,10 +121,10 @@
                                         <span class="italic text-gray-400">No networks</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-nowrap text-sm border text-gray-700">
                                     {{ optional($membership->created_at)->format('d M Y') ?? 'N/A' }}</td>
                                 <td
-                                    class="px-6 py-4 whitespace-normal text-sm text-gray-700 max-h-12 w-1/5 overflow-y-auto">
+                                    class="px-2 py-2 md:px-6 md:py-3 whitespace-normal text-sm border text-gray-700 max-h-12 w-1/5 overflow-y-auto">
                                     @if ($membership->applications->count())
                                         <ul class="list-disc list-inside space-y-4 max-h-12 overflow-auto">
                                             @foreach ($membership->applications as $app)
@@ -220,7 +220,7 @@
                                         <span class="italic text-gray-400">No applications</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 space-x-2">
+                                <td class="px-2 py-2 md:px-6 md:py-3 whitespace-nowrap text-center text-sm border text-gray-700 space-x-2">
                                     {{-- View Details Button --}}
                                     <a href="{{ route('admin.show', $membership->id) }}"
                                         class="inline-flex items-center gap-2 px-3 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 transition"

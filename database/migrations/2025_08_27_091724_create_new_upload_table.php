@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('audit_report')->nullable();
             $table->string('goal')->nullable();
             $table->longText('signature')->nullable(); // base64 string or file path
+            $table->foreignId('new_membership_id')->constrained('new_memberships')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -52,8 +53,8 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('membership_uploads');
-        Schema::dropIfExists('networks');
         Schema::dropIfExists('focal_points');
+        Schema::dropIfExists('networks');
+        Schema::dropIfExists('membership_uploads');
     }
 };

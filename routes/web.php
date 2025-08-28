@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('user');
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         Route::get('/membership', [AdminController::class, 'membershipShow'])->name('membership');
+        Route::get('/newMembership', [AdminController::class, 'newMembership'])->name('newMembership');
     });
 
     // User profile routes

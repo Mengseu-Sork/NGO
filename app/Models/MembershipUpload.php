@@ -12,7 +12,7 @@ class MembershipUpload extends Model
     protected $fillable = [
         'letter','constitution','activities','funding',
         'registration','strategic_plan','fundraising_strategy',
-        'audit_report','goal','signature'
+        'audit_report','goal','signature', 'new_membership_id'
     ];
 
     public function networks()
@@ -23,5 +23,10 @@ class MembershipUpload extends Model
     public function focalPoints()
     {
         return $this->hasMany(FocalPoints::class);
+    }
+
+    public function newMembership()
+    {
+        return $this->hasOne(NewMembership::class);
     }
 }

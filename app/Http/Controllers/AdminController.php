@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Membership;
+use App\Models\MembershipUpload;
 use Illuminate\Support\Facades\Auth;
+use App\Models\newMembership;
 
 class AdminController extends Controller
 {
@@ -61,5 +63,16 @@ class AdminController extends Controller
             ->findOrFail($id);
 
         return view('admin.show', compact('membership'));
+    }
+
+    public function newMembership()
+    {
+        $newMemberships = NewMembership::with([
+            'user', 
+            'membershipUploads.networks',
+            'membershipUploads.focalPoints'
+        ])->get();
+
+        return view('admin.newMembership', compact('newMemberships'));
     }
 }

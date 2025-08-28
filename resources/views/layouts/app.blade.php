@@ -35,9 +35,9 @@
                         Non Memberships
                     </a>
                     </a>
-                    <a href="#"
+                    <a href="{{ route('admin.newMembership') }}"
                         class="font-semibold border-b-2
-                {{ request()->routeIs('') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                {{ request()->routeIs('admin.newMembership') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                         New Memberships
                     </a>
                     <a href="#"
