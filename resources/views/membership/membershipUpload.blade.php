@@ -243,26 +243,35 @@
         // Signature Pad
         const canvas = document.getElementById("signature-pad");
         const signaturePad = new SignaturePad(canvas, {
-            backgroundColor: 'rgba(255,255,255,0)'
+            backgroundColor: 'white', // ensure solid background
         });
+
+        // Set initial canvas size
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear(); // clear after resize
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
         const clearBtn = document.getElementById("clear-signature");
         const uploadInput = document.getElementById("upload-signature");
         const signatureInput = document.getElementById("signature-input");
 
+        // Clear signature
         clearBtn.addEventListener("click", () => {
             signaturePad.clear();
             signatureInput.value = '';
         });
 
-        canvas.addEventListener('mouseup', () => {
-            if (!signaturePad.isEmpty()) {
-                signatureInput.value = signaturePad.toDataURL('image/png');
-            }
-        });
-
-        uploadInput.addEventListener('change', (e) => {
+        // Upload signature
+        uploadInput.addEventListener("change", (e) => {
             const file = e.target.files[0];
             if (!file) return;
+
             const reader = new FileReader();
             reader.onload = function(event) {
                 const img = new Image();
@@ -277,6 +286,7 @@
             reader.readAsDataURL(file);
         });
 
+        // Always save signature on form submit
         document.querySelector("form").addEventListener("submit", e => {
             if (!signaturePad.isEmpty()) {
                 signatureInput.value = signaturePad.toDataURL('image/png');
