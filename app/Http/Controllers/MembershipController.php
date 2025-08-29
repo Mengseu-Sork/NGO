@@ -28,7 +28,7 @@ class MembershipController extends Controller
         // Require authentication for all methods except thankyou
         $this->middleware('auth')->except(['thankyou']);
     }
-    
+
     public function showForm()
     {
         $userId = Auth::id();
@@ -59,7 +59,7 @@ class MembershipController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        
+
         if ($request->membership === 'No') {
             // Create membership record (store only status and link to user)
             $membership = Membership::create([
@@ -167,7 +167,7 @@ class MembershipController extends Controller
                     Mail::to($request->director_email)
                         ->send(new MembershipYesEmail($membership, $deadline, $admins));
                 }
-                
+
                 if ($membershipConfirmed) {
                     Log::info('Sending admin email to: ' . implode(', ', $admins->toArray()));
                     Mail::to($admins->toArray())
@@ -202,7 +202,7 @@ class MembershipController extends Controller
         $memberships = Membership::with(['user', 'networks', 'focalPoints', 'applications'])->get();
 
         $pdf = PDF::loadView('admin.pdf', compact('memberships'))
-                ->setPaper('a4', 'landscape'); // optional: landscape mode for wide tables
+            ->setPaper('a4', 'landscape'); // optional: landscape mode for wide tables
 
         return $pdf->download('memberships.pdf');
     }
@@ -330,4 +330,68 @@ class MembershipController extends Controller
         return response()->download($tempFile, $fileName)->deleteFileAfterSend(true);
     }
 
+
+    public function edit($id)
+    {
+        $membership = Membership::findOrFail($id);
+
+        return view('admin.editMembership', compact('membership'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $membership = Membership::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'ngo_name' => 'required|string|max:255',
+            'director_name' => 'required|string|max:255',
+            'director_phone' => 'required|string|max:20',
+            'director_email' => 'required|email|max:255',
+            'alt_name' => 'nullable|string|max:255',
+            'alt_phone' => 'nullable|string|max:20',
+            'alt_email' => 'nullable|email|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            $membership->update([
+                'ngo_name' => $request->ngo_name,
+                'director_name' => $request->director_name,
+                'director_phone' => $request->director_phone,
+                'director_email' => $request->director_email,
+                'alt_name' => $request->alt_name,
+                'alt_phone' => $request->alt_phone,
+                'alt_email' => $request->alt_email,
+            ]);
+
+            return redirect()->route('admin.membership')->with('success', 'Membership updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+
+    public function destroy($id)
+    {
+        $membership = Membership::findOrFail($id);
+
+        DB::beginTransaction();
+        try {
+            // Delete related networks and focal points
+            $membership->networks()->delete();
+            $membership->focalPoints()->delete();
+
+            $membership->delete();
+
+            DB::commit();
+            return redirect()->route('membership.showForm')->with('success', 'Membership deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
 }

@@ -33,8 +33,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/newMembership', [AdminController::class, 'newMembership'])->name('newMembership');
     });
 
+    //edit and delete 
+    Route::get('/memberships/{id}/edit', [MembershipController::class, 'edit'])->name('admin.edit');
+    Route::put('/memberships/{id}', [MembershipController::class, 'update'])->name('admin.update');
+    Route::delete('/memberships/{id}', [MembershipController::class, 'destroy'])->name('admin.destroy');
+
     // User profile routes
     Route::get('/profile', [UserController::class, 'profile'])
+    ->name('profile');
+    Route::get('/newProfile', [UserController::class, 'newProfile'])
     ->name('profile');
 
 

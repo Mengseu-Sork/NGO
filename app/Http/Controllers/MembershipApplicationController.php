@@ -34,15 +34,15 @@ class MembershipApplicationController extends Controller
             'phone-signal' => 'nullable|required_if:comm-channel,Signal|string|max:20',
             'phone-whatsapp' => 'nullable|required_if:comm-channel,WhatsApp|string|max:20',
 
-            'letter' => 'required|file',
-            'constitution' => 'required|file',
-            'activities' => 'required|file',
-            'funding' => 'required|file',
-            'registration' => 'required|file',
-            'strategic-plan' => 'required|file',
+            'letter' => 'nullable|file',
+            'constitution' => 'nullable|file',
+            'activities' => 'nullable|file',
+            'funding' => 'nullable|file',
+            'registration' => 'nullable|file',
+            'strategic-plan' => 'nullable|file',
             'fundraising-strategy' => 'nullable|file',
-            'audit-report' => 'required|file',
-            'signature' => 'required|file',
+            'audit-report' => 'nullable|file',
+            'signature' => 'nullable|file',
 
             'vision' => 'required|string',
             'mission' => 'required|string',
@@ -79,7 +79,7 @@ class MembershipApplicationController extends Controller
 
         foreach ($fileFields as $field) {
             if ($request->hasFile($field)) {
-                $path = $request->file($field)->store('uploads/membership', 'public');
+                $path = $request->file($field)->store('membership', 'public');
                 $data[$field] = $path;
             }
         }

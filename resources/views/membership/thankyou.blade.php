@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NGOF Membership Reconfirmation</title>
+    <title>NGOF Membership</title>
     <link rel="icon" href="/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -21,7 +21,7 @@
         <!-- Header Section -->
         <div class="flex items-center justify-center text-white mb-4 sm:mb-6">
             <!-- Icon for the header (Font Awesome) -->
-            <i class="fas fa-handshake text-yellow-500 mr-2 text-3xl sm:text-5xl mr-6"></i>
+            <i class="fas fa-handshake text-yellow-500 text-3xl sm:text-5xl mr-6"></i>
             <h1 class="text-2xl sm:text-5xl lg:text-4xl font-bold">
                 NGOF Membership Reconfirmation
             </h1>
@@ -33,7 +33,7 @@
         </p>
 
         <!-- Main Content Card -->
-        <div class="w-full max-w-3xl rounded-xl shadow-2xl bg-gray-50 rounded-lg border border-gray-200">
+        <div class="w-full max-w-3xl shadow-2xl bg-gray-50 rounded-lg border border-gray-200">
             <div class="p-6 sm:p-8">
                 <h2 class="text-left text-green-600 mb-4 text-xl">
                     Dear NGOF Member,

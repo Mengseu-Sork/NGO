@@ -22,18 +22,18 @@ class AdminController extends Controller
 
     public function index()
     {
-        $totalNew     = 20;
-        $totalAccept  = 15;
-        $totalRequest = 8;
-        $totalCancel  = 5;
-        $totalMembership  = 8;
+        $totalNew = \App\Models\NewMembership::count();
+        $totalOld = \App\Models\Membership::count();
+        $totalRequest = 0;
+        $totalCancel  = 0;
+        $totalMembership = $totalOld + $totalNew;
 
         // Fake monthly data
         $months = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         $monthlyData = [50, 200, 300, 250, 500, 280, 400, 260, 520];
 
         return view('admin.dashboard', compact(
-            'totalNew', 'totalAccept', 'totalRequest', 'totalCancel',
+            'totalNew', 'totalOld', 'totalRequest', 'totalCancel',
             'months', 'monthlyData', 'totalMembership'
         ));
     }

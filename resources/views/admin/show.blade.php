@@ -284,8 +284,8 @@
                                         <div class=" grid grid-cols-1 lg:grid-cols-2 gap-3">
                                             @foreach ($membership->focalPoints as $focal)
                                                 <div class="focal-point-card p-4 rounded-lg">
-                                                    <h4 class="font-semibold text-gray-900">{{ $focal->name }}</h4>
-                                                    <p class="text-gray-600 font-medium">{{ $focal->position }}</p>
+                                                    <h4 class="font-semibold text-gray-900">{{ $focal->name }}  ( {{ $focal->position }} )</h4>
+                                                    <p class="text-gray-600 font-medium">{{ $focal->email }}</p>
                                                     <p class="text-gray-700 text-sm">{{ $focal->network_name }}</p>
                                                 </div>
                                             @endforeach
@@ -482,16 +482,16 @@
                                                 </div>
                                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                                     @foreach ([
-            'letter' => 'Recommendation Letter',
-            'constitution' => 'Constitution',
-            'activities' => 'Activities Report',
-            'funding' => 'Funding Proposal',
-            'registration' => 'Registration Certificate',
-            'strategic_plan' => 'Strategic Plan',
-            'fundraising_strategy' => 'Fundraising Strategy',
-            'audit_report' => 'Audit Report',
-            'signature' => 'Authorized Signature',
-        ] as $field => $label)
+                                                        'letter' => 'Recommendation Letter',
+                                                        'constitution' => 'Constitution',
+                                                        'activities' => 'Activities Report',
+                                                        'funding' => 'Funding Proposal',
+                                                        'registration' => 'Registration Certificate',
+                                                        'strategic_plan' => 'Strategic Plan',
+                                                        'fundraising_strategy' => 'Fundraising Strategy',
+                                                        'audit_report' => 'Audit Report',
+                                                        'signature' => 'Authorized Signature',
+                                                    ] as $field => $label)
                                                         @if (!empty($app->$field))
                                                             <a href="{{ asset('storage/' . $app->$field) }}"
                                                                 target="_blank"
@@ -530,7 +530,7 @@
                                     <p class="text-gray-600 italic">No applications found.</p>
                                 </div>
                             @endif
-                            <a href="{{ route('admin.dashboard') }}"
+                            <a href="{{ route('admin.membership') }}"
                                 class="inline-flex items-center gap-2 px-4 py-2 mb-2 mt-6 bg-green-600 hover:bg-green-700 text-white 
                             rounded-md font-medium transition-colors shadow-sm">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -13,7 +13,7 @@
     @php
         $cards = [
             ['title' => 'New Membership', 'color' => 'blue-600', 'value' => $totalNew, 'img' => '/new.jpg'],
-            ['title' => 'Accept Membership', 'color' => 'green-600', 'value' => $totalAccept, 'img' => '/approved.jpg'],
+            ['title' => 'Old Membership', 'color' => 'green-600', 'value' => $totalOld, 'img' => '/approved.jpg'],
             ['title' => 'Request Membership', 'color' => 'yellow-400', 'value' => $totalRequest, 'img' => '/request.jpg'],
             ['title' => 'Cancel Membership', 'color' => 'red-500', 'value' => $totalCancel, 'img' => '/cencel.jpg'],
             ['title' => 'Total Membership', 'color' => 'gray-500', 'value' => $totalMembership, 'img' => '/total.jpg']
@@ -49,7 +49,7 @@
             <h2 class="font-semibold text-lg text-green-700 mb-2">Membership Overview</h2>
             <ul class="text-base mt-4 sm:mt-12 ml-2 sm:ml-6">
                 <li class="flex items-center mb-1"><span class="w-3 h-3 inline-block mr-2" style="background-color: #facc15;"></span> Request</li>
-                <li class="flex items-center mb-1"><span class="w-3 h-3 inline-block mr-2" style="background-color: #22c55e;"></span> Accept</li>
+                <li class="flex items-center mb-1"><span class="w-3 h-3 inline-block mr-2" style="background-color: #22c55e;"></span> Total Old</li>
                 <li class="flex items-center mb-1"><span class="w-3 h-3 inline-block mr-2" style="background-color: #ef4444;"></span> Cancel</li>
                 <li class="flex items-center mb-1"><span class="w-3 h-3 inline-block mr-2" style="background-color: #3b82f6;"></span> Total New</li>
             </ul>
@@ -89,9 +89,9 @@
     new Chart(document.getElementById('pieChart'), {
         type: 'pie',
         data: {
-            labels: ['Request', 'Accept', 'Cancel', 'Total New'],
+            labels: ['Request', 'Total Old', 'Cancel', 'Total New'],
             datasets: [{
-                data: [{{ $totalRequest }}, {{ $totalAccept }}, {{ $totalCancel }}, {{ $totalNew }}],
+                data: [{{ $totalRequest }}, {{ $totalOld }}, {{ $totalCancel }}, {{ $totalNew }}],
                 backgroundColor: ['#facc15', '#22c55e', '#ef4444', '#3b82f6'],
                 hoverOffset: 6
             }]

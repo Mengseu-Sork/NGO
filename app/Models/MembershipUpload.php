@@ -27,6 +27,6 @@ class MembershipUpload extends Model
 
     public function newMembership()
     {
-        return $this->hasOne(NewMembership::class);
+        return $this->belongsTo(NewMembership::class);
     }
 }

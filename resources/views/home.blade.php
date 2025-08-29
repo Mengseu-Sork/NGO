@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Membership</title>
+    <link rel="icon" href="/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -123,7 +124,7 @@
                     Associate Member Organizations: Agencies with Associate Member status have the right of voice only.
                 </p>
                 <p class="mt-4 text-gray-800 font-semibold">Eligibility</p>
-                <ol class="list-decimal list-inside mt-2 text-sm text-gray-600 text-sm">
+                <ol class="list-decimal list-inside mt-2 text-sm text-gray-600">
                     <li>Applicants for Associate Membership of the NGO FORUM must be organizations which satisfy eligibility requirements.</li>
                     <li>Applicants for full membership of the NGO FORUM must be non-government organizations (NGOs), which are not-for-profit, not for proselytizing, and not aligned with any political party inside or outside the country.</li>
                     <li>Have as a primary objective the provision of development and humanitarian assistance, including educational and advocacy activities.</li>
