@@ -5,7 +5,7 @@
 @section('content')
     <div class="max-w-full mx-auto">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-bold text-green-700">All Memberships</h1>
+            <h1 class="text-2xl md:text-3xl font-semibold text-green-700">All Memberships</h1>
         </div>
 
         @if ($newMemberships->count())
@@ -136,7 +136,7 @@
                                             class="absolute right-8 -mt-3 w-16 md:w-24 bg-white border rounded shadow-lg z-10 flex flex-col p-1 space-y-1">
 
                                             <!-- View Details -->
-                                            <a href="{{ route('admin.show', $membership->id) }}"
+                                            <a href="{{ route('admin.newShowMembership', $membership->id) }}"
                                                 class="flex items-center px-2 py-1 text-sm text-blue-700 hover:bg-blue-100 rounded transition">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-1"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,7 +149,7 @@
                                             </a>
 
                                             <!-- Edit -->
-                                            <a href="{{ route('admin.edit', $membership->id) }}"
+                                            <a href="{{ route('admin.editNewMembership', $membership->id) }}"
                                                 class="flex items-center px-2 py-1 text-sm text-green-700 hover:bg-green-100 rounded transition">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-1"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">

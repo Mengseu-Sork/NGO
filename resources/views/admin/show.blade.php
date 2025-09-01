@@ -165,7 +165,7 @@
 
     <div class="min-h-screen max-w-full mx-auto">
         <div class="bg-white shadow-sm border-b border-gray-200">
-            <div class="max-w-full mx-auto py-6 px-2 sm:px-6 lg:px-4">
+            <div class="max-w-full mx-auto py-6 px-6 sm:px-6 lg:px-6">
                 <div class="border-b border-gray-200 pb-4">
                     <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
                         {{ $membership->ngo_name ?? 'N/A' }}

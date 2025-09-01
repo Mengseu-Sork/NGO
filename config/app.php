@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    'timezone' => 'Asia/Phnom_Penh',
     /*
     |--------------------------------------------------------------------------
     | Application Name

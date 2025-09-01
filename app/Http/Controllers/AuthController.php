@@ -55,14 +55,18 @@ class AuthController extends Controller
             }
 
             if (Auth::user()->role === 'user') {
-                $userInput = Auth::user()->ngo; // User can type either full name or abbreviation
+                $user = Auth::user(); // <-- define $user first
+                $userInput = $user->ngo;
 
                 $ngoExists = \App\Models\Ngo::where('ngo_name', $userInput)
                     ->orWhere('abbreviation', $userInput)
                     ->exists();
 
                 if (!$ngoExists) {
-                    // If no matching NGO name found → redirect to membershipDetail page
+                    $hasMembership = \App\Models\NewMembership::where('user_id', $user->id)->exists();
+                    if ($hasMembership) {
+                        return redirect()->route('newProfile');
+                    }
                     return redirect()->route('membership.menbershipDetail');
                 }
 

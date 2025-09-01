@@ -33,16 +33,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/newMembership', [AdminController::class, 'newMembership'])->name('newMembership');
     });
 
-    //edit and delete 
+    //edit and delete old memberships
     Route::get('/memberships/{id}/edit', [MembershipController::class, 'edit'])->name('admin.edit');
     Route::put('/memberships/{id}', [MembershipController::class, 'update'])->name('admin.update');
     Route::delete('/memberships/{id}', [MembershipController::class, 'destroy'])->name('admin.destroy');
+
+
+    //edit and delete New Memberships
+    Route::get('/newMemberships/{id}/edit', [NewMembershipController::class, 'edit'])->name('admin.editNewMembership');
+    Route::put('/newMemberships/{id}', [NewMembershipController::class, 'newUpdate'])->name('admin.newUpdate');
+    Route::delete('/newMemberships/{id}', [NewMembershipController::class, 'delete'])->name('admin.delete');
 
     // User profile routes
     Route::get('/profile', [UserController::class, 'profile'])
     ->name('profile');
     Route::get('/newProfile', [UserController::class, 'newProfile'])
-    ->name('profile');
+    ->name('newProfile');
 
 
     // Membership main form routes
@@ -63,6 +69,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Membership management routes
     Route::get('/admin/show/{id}', [AdminController::class, 'show'])->name('admin.show');
+    Route::get('/admin/newShowMembership/{id}', [AdminController::class, 'newShowMembership'])
+    ->name('admin.newShowMembership');
+
 
     // Membership export routes
     Route::get('/admin/export/excel', [MembershipController::class, 'exportExcel'])->name('memberships.exportExcel');
@@ -82,6 +91,12 @@ Route::middleware(['auth'])->group(function () {
     // New Membership form Upload
     Route::get('/membership/membershipUpload', [MembershipUploadController::class, 'form'])->name('membership.membershipUpload');
     Route::post('/membership/membershipUpload', [MembershipUploadController::class, 'store'])->name('memberships.store');
+
+
+    //
+    Route::get('/admin/membership/{id}/read', [MembershipController::class, 'markAsRead'])->name('admin.membership.read');
+    Route::get('/admin/newMembership/{id}/read', [NewMembershipController::class, 'markAsRead'])->name('admin.newMembership.read');
+
 
 
 });

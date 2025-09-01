@@ -61,6 +61,9 @@ class AdminController extends Controller
 
         $membership = Membership::with('user', 'networks', 'focalPoints', 'applications')
             ->findOrFail($id);
+        if (!$membership->read_at) {
+            $membership->update(['read_at' => now()]);
+        }
 
         return view('admin.show', compact('membership'));
     }
@@ -75,4 +78,21 @@ class AdminController extends Controller
 
         return view('admin.newMembership', compact('newMemberships'));
     }
+
+    public function newShowMembership($id)
+    {
+        $membership = NewMembership::with([
+            'user', 
+            'membershipUploads.networks',
+            'membershipUploads.focalPoints'
+        ])
+        ->where('id', $id)
+        ->firstOrFail();
+        if (!$membership->read_at) {
+            $membership->update(['read_at' => now()]);
+        }
+
+        return view('admin.newShowMembership', compact('membership'));
+    }
+
 }
