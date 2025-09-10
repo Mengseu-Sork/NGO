@@ -175,11 +175,11 @@
                         <p class="text-gray-600 mt-4 text-5sm">
                             {{ $membership->created_at ? $membership->created_at->format('d M Y') : 'N/A' }}
                         </p>
-                        <p class="px-2 py-1 text-white rounded
-                            @if($membership->status === 'pending') bg-orange-400
+                        <p
+                            class="px-2 py-1 text-white rounded
+                            @if ($membership->status === 'pending') bg-orange-400
                             @elseif($membership->status === 'approved') bg-green-500
-                            @elseif($membership->status === 'cancel') bg-red-500
-                            @endif">
+                            @elseif($membership->status === 'cancel') bg-red-500 @endif">
                             {{ ucfirst($membership->status) }}
                         </p>
                     </div>
@@ -439,17 +439,17 @@
                                                 </div>
                                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                                     @foreach ([
-            'letter' => 'Recommendation Letter',
-            'constitution' => 'Constitution',
-            'activities' => 'Activities Report',
-            'funding' => 'Funding Proposal',
-            'registration' => 'Registration Certificate',
-            'strategic_plan' => 'Strategic Plan',
-            'fundraising_strategy' => 'Fundraising Strategy',
-            'audit_report' => 'Audit Report',
-            'signature' => 'Authorized Signature',
-            'goal' => 'Global audit report / Financial Report',
-        ] as $field => $label)
+                                                        'letter' => 'Letter',
+                                                        'mission_vision' => 'Mission & Vision',
+                                                        'constitution' => 'Constitution',
+                                                        'activities' => 'Activities',
+                                                        'funding' => 'Funding',
+                                                        'authorization' => 'Authorization',
+                                                        'strategic_plan' => 'Strategic Plan',
+                                                        'fundraising_strategy' => 'Fundraising Strategy',
+                                                        'signature' => 'Signature',
+                                                        'audit_report' => 'Audit Report',
+                                                    ] as $field => $label)
                                                         @if (!empty($app->$field))
                                                             <a href="{{ asset('storage/' . $app->$field) }}"
                                                                 target="_blank"

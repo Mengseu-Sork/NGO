@@ -10,9 +10,21 @@ class NewMembership extends Model
     use HasFactory;
 
     protected $fillable = [
-        'org_name_en', 'org_name_kh', 'membership_type', 'director_name', 'director_email',
-        'director_phone', 'alt_phone', 'website', 'social_media', 'representative_name',
-        'representative_email', 'representative_phone', 'representative_position','user_id', 
+        'org_name_en',
+        'org_name_kh',
+        'membership_type',
+        'director_name',
+        'director_email',
+        'director_phone',
+        'alt_phone',
+        'website',
+        'social_media',
+        'representative_name',
+        'representative_email',
+        'representative_phone',
+        'representative_position',
+        'user_id',
+        'status'
     ];
 
     public function membershipUploads()
@@ -26,5 +38,18 @@ class NewMembership extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
 
+    public function isApproved(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
+    }
 }

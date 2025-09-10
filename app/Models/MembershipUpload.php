@@ -10,9 +10,18 @@ class MembershipUpload extends Model
     use HasFactory;
 
     protected $fillable = [
-        'letter','constitution','activities','funding',
-        'registration','strategic_plan','fundraising_strategy',
-        'audit_report','goal','signature', 'new_membership_id'
+        'letter',
+        'mission_vision',
+        'constitution',
+        'activities',
+        'funding',
+        'authorization',
+        'strategic_plan',
+        'fundraising_strategy',
+        'audit_report',
+        'logo',
+        'signature',
+        'new_membership_id'
     ];
 
     public function networks()

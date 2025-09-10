@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('new_memberships', function (Blueprint $table) {
-            $table->enum('status', ['pending', 'approved', 'cancel'])->default('pending')->after('representative_position');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending')->after('representative_position');
         });
     }
 

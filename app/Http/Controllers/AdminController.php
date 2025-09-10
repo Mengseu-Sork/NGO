@@ -22,21 +22,32 @@ class AdminController extends Controller
 
     public function index()
     {
-        $totalNew = \App\Models\NewMembership::count();
-        $totalOld = \App\Models\Membership::count();
-        $totalRequest = 0;
-        $totalCancel  = 0;
+        // Count memberships by status
+        $totalNew = NewMembership::where('status', 'approved')->count();
+        $totalRequest = NewMembership::where('status', 'pending')->count();
+        $totalCancel  = NewMembership::where('status', 'cancel')->count();
+
+        // Old memberships
+        $totalOld = Membership::count();
+
+        // Sum all memberships
         $totalMembership = $totalOld + $totalNew;
 
         // Fake monthly data
-        $months = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        $months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         $monthlyData = [50, 200, 300, 250, 500, 280, 400, 260, 520];
 
         return view('admin.dashboard', compact(
-            'totalNew', 'totalOld', 'totalRequest', 'totalCancel',
-            'months', 'monthlyData', 'totalMembership'
+            'totalNew',
+            'totalOld',
+            'totalRequest',
+            'totalCancel',
+            'months',
+            'monthlyData',
+            'totalMembership'
         ));
     }
+
 
 
     public function membershipShow()
@@ -71,7 +82,7 @@ class AdminController extends Controller
     public function newMembership()
     {
         $newMemberships = NewMembership::with([
-            'user', 
+            'user',
             'membershipUploads.networks',
             'membershipUploads.focalPoints'
         ])->get();
@@ -82,17 +93,16 @@ class AdminController extends Controller
     public function newShowMembership($id)
     {
         $membership = NewMembership::with([
-            'user', 
+            'user',
             'membershipUploads.networks',
             'membershipUploads.focalPoints'
         ])
-        ->where('id', $id)
-        ->firstOrFail();
+            ->where('id', $id)
+            ->firstOrFail();
         if (!$membership->read_at) {
             $membership->update(['read_at' => now()]);
         }
 
         return view('admin.newShowMembership', compact('membership'));
     }
-
 }

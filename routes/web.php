@@ -11,6 +11,9 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\MembershipDetailController;
 use App\Http\Controllers\NewMembershipController;
 use App\Http\Controllers\MembershipUploadController;
+use App\Http\Controllers\MembershipReportController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\CalendarController;
 
 
 // Authentication routes
@@ -46,14 +49,14 @@ Route::middleware(['auth'])->group(function () {
 
     // User profile routes
     Route::get('/profile', [UserController::class, 'profile'])
-    ->name('profile');
+        ->name('profile');
     Route::get('/newProfile', [UserController::class, 'newProfile'])
-    ->name('newProfile');
+        ->name('newProfile');
 
 
     // Membership main form routes
     Route::get('/membership/form', [MembershipController::class, 'showForm'])->name('membership.form');
-    Route::post('/membership/form', [MembershipController::class, 'submitReconfirmation'])->name('membership.submit'); 
+    Route::post('/membership/form', [MembershipController::class, 'submitReconfirmation'])->name('membership.submit');
 
     // Membership application upload routes
     Route::get('/membership/formUpload', [MembershipApplicationController::class, 'showForm'])->name('membership.formUpload');
@@ -63,14 +66,14 @@ Route::middleware(['auth'])->group(function () {
     // Membership reconfirmation routes (if different from main form)
     Route::get('/membership/reconfirm', [MembershipController::class, 'showFormReconfirm'])->name('membership.reconfirm.form');
     Route::post('/membership/reconfirm', [MembershipController::class, 'submitReconfirmation'])->name('membership.reconfirm.submit');
-    
+
     // Thank you page
     Route::get('/membership/thankyou', [MembershipController::class, 'thankyou'])->name('membership.thankyou');
 
     // Membership management routes
     Route::get('/admin/show/{id}', [AdminController::class, 'show'])->name('admin.show');
     Route::get('/admin/newShowMembership/{id}', [AdminController::class, 'newShowMembership'])
-    ->name('admin.newShowMembership');
+        ->name('admin.newShowMembership');
 
 
     // Membership export routes
@@ -78,8 +81,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/export/pdf', [MembershipController::class, 'exportPDF'])->name('memberships.exportPDF');
     Route::get('/admin/export/word', [MembershipController::class, 'exportWord'])->name('memberships.exportWord');
     Route::get('/file-view/{path}', [FileViewController::class, 'viewFile'])
-    ->where('path', '.*')
-    ->name('file.view');
+        ->where('path', '.*')
+        ->name('file.view');
 
     // Membership detail route
     Route::get('/membership/menbershipDetail', [MembershipDetailController::class, 'index'])->name('membership.menbershipDetail');
@@ -92,12 +95,28 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/membership/membershipUpload', [MembershipUploadController::class, 'form'])->name('membership.membershipUpload');
     Route::post('/membership/membershipUpload', [MembershipUploadController::class, 'store'])->name('memberships.store');
 
+    //Report Data
+    Route::get('/reports/membership', [MembershipReportController::class, 'index'])->name('reports.membership');
+    Route::get('/reports/show/{id}', [MembershipReportController::class, 'show'])->name('reports.show');
 
-    //
-    Route::get('/admin/membership/{id}/read', [MembershipController::class, 'markAsRead'])->name('admin.membership.read');
-    Route::get('/admin/newMembership/{id}/read', [NewMembershipController::class, 'markAsRead'])->name('admin.newMembership.read');
 
+    // Event calendar routes
+    Route::prefix('calendar')->name('events.')->group(function () {
+        Route::get('/', [CalendarController::class, 'index'])->name('calendar');   // events.calendar
+        Route::post('/', [CalendarController::class, 'store'])->name('store');      // events.store
+    });
 
+    // Event management routes
+    Route::prefix('newEvent')->name('events.')->group(function () {
+        Route::get('/', [EventController::class, 'index'])->name('newEvent');   // events.Event
+        Route::post('/', [EventController::class, 'store'])->name('store');      // events.store
+        Route::get('/{event}/edit', [EventController::class, 'edit'])->name('edit'); // events.edit
+        Route::put('/{event}', [EventController::class, 'update'])->name('update'); // events.update
+        Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy'); // events.destroy
+        Route::get('/{event}/json', [EventController::class, 'getEvent'])->name('json');
+    });
+
+    // Past events route
+    Route::get('/events/pastEvent', [EventController::class, 'showPast'])->name('events.pastEvent');
 
 });
-

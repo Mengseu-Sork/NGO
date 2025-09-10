@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('membership_uploads', function (Blueprint $table) {
             $table->id();
-            $table->string('letter')->nullable();
-            $table->string('constitution')->nullable();
-            $table->string('activities')->nullable();
-            $table->string('funding')->nullable();
-            $table->string('registration')->nullable();
-            $table->string('strategic_plan')->nullable();
-            $table->string('fundraising_strategy')->nullable();
-            $table->string('audit_report')->nullable();
-            $table->string('goal')->nullable();
+            $table->string('letter')->nullable();                // Letter explaining why your organization wishes to join NGOF
+            $table->string('mission_vision')->nullable();       // Organization's Mission and/or Vision Statement
+            $table->string('constitution')->nullable();         // Organization's Constitution and/or By-Laws
+            $table->string('activities')->nullable();           // List or summary of current activities in Cambodia
+            $table->string('funding')->nullable();              // Funding sources and Board Members
+            $table->string('authorization')->nullable();        // Official authorization/Registration with MoI
+            $table->string('strategic_plan')->nullable();       // Organization strategic plan
+            $table->string('fundraising_strategy')->nullable(); // Fundraising strategy (optional)
+            $table->string('audit_report')->nullable();         // Global audit report / Financial Report
             $table->longText('signature')->nullable(); // base64 string or file path
             $table->foreignId('new_membership_id')->constrained('new_memberships')->onDelete('cascade');
             $table->timestamps();

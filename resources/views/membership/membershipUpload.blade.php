@@ -98,14 +98,15 @@
             </h3>
             @foreach ([
         'letter' => 'Letter explaining why your organization wishes to join NGOF',
-        'constitution' => "The Organization's Mission and/or Vision Statement (where these exist)",
-        'activities' => "The Organization's Constitution and/or By-Laws (where these exist)",
-        'funding' => 'List or summary of current activities in Cambodia; brochures or other explanatory documents',
-        'registration' => 'A list of the Organisation’s funding sources, and list of Board Members or other decision-making body',
-        'strategic_plan' => 'Official authorization/Registration with MoI to operate in Cambodia',
-        'fundraising_strategy' => 'The organization strategic plan (if available)',
-        'audit_report' => 'The fundraising strategy (Optional)',
-        'goal' => 'Global audit report / Financial Report',
+        'mission_vision' => "The Organization's Mission and/or Vision Statement (where these exist)",
+        'constitution' => "The Organization's Constitution and/or By-Laws (where these exist)",
+        'activities' => 'List or summary of current activities in Cambodia; brochures or other explanatory documents',
+        'funding' => 'A list of the Organisation’s funding sources, and list of Board Members or other decision-making body',
+        'authorization' => 'Official authorization/Registration with MoI to operate in Cambodia',
+        'strategic_plan' => 'The organization strategic plan (if available)',
+        'fundraising_strategy' => 'The fundraising strategy (Optional)',
+        'audit_report' => 'Global audit report / Financial Report',
+        'logo' => 'The Logo Organization is required.',
     ] as $field => $label)
                 <div class="mb-6 border border-gray-300 rounded-md p-4">
                     <label for="{{ $field }}" class="block font-normal mb-3">{{ $label }}</label>

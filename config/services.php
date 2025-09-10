@@ -30,5 +30,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'abacus' => [
+        'key' => env('ABACUS_API_KEY'),
+        'url' => 'https://api.abacus.ai/translate', // adjust to the real Abacus endpoint
+    ],
 
 ];

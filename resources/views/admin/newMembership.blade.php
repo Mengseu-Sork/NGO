@@ -65,15 +65,15 @@
                                                 <ul class="list-disc list-inside space-y-1 text-green-700">
                                                     @foreach ([
                                                         'letter' => 'Letter',
+                                                        'mission_vision' => 'Mission & Vision',
                                                         'constitution' => 'Constitution',
                                                         'activities' => 'Activities',
                                                         'funding' => 'Funding',
-                                                        'registration' => 'Registration',
+                                                        'authorization' => 'Authorization',
                                                         'strategic_plan' => 'Strategic Plan',
                                                         'fundraising_strategy' => 'Fundraising Strategy',
-                                                        'audit_report' => 'Audit Report',
                                                         'signature' => 'Signature',
-                                                        'goal' => 'Goal',
+                                                        'audit_report' => 'Audit Report',
                                                     ] as $field => $label)
                                                         @if (!empty($upload->$field))
                                                             @php

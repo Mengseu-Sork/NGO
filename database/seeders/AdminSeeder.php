@@ -9,54 +9,64 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run(): void
     {
-        $admins = [
+        $users = [
             // [
-            //     'name' => 'NGOF Admin',
+            //     'name' => 'Bunna',
             //     'ngo' => 'NGO Forum Cambodia',
             //     'email' => 'support@ngoforum.org.kh',
             //     'role' => 'admin',
             //     'password' => 'UnifiP@$$w0rd'
             // ],
             // [
-            //     'name' => 'Vicheth Chan',
+            //     'name' => 'Vicheth',
             //     'ngo' => 'NGO Forum Cambodia',
             //     'email' => 'vicheth@ngoforum.org.kh',
-            //     'role' => 'admin',
+            //     'role' => 'manager',
             //     'password' => 'NecaAwg*2023'
             // ],
             // [
             //     'name' => 'Saroeun Chhun',
             //     'ngo' => 'NGO Forum Cambodia',
             //     'email' => 'saroeun@ngoforum.org.kh',
-            //     'role' => 'admin',
+            //     'role' => 'ed',
             //     'password' => 'NecaAwg*2023'
             // ],
+            // [
+            //     'name' => 'Touch Chamroeun',
+            //     'ngo' => 'NGO Forum Cambodia',
+            //     'email' => 'director@vbnk.org',
+            //     'role' => 'board',
+            //     'password' => 'SecureBoard*2023'
+            // ],
+            // [
+            //     'name' => 'Chettana',
+            //     'ngo' => 'NGO Forum Cambodia',
+            //     'email' => 'chettana@ngoforum.org.kh',
+            //     'role' => 'operations',
+            //     'password' => 'SecureOps*2023'
+            // ],
             [
-                'name' => 'NGOF Admin',
+                'name' => 'Mengseu',
                 'ngo' => 'NGO Forum Cambodia',
                 'email' => 'mengseu.sork@student.passerellesnumeriques.org',
                 'role' => 'admin',
-                'password' => '123456789'
+                'password' => '1234567890'
             ],
-
         ];
 
-        foreach ($admins as $admin) {
-            User::create([
-                'name' => $admin['name'],
-                'ngo' => $admin['ngo'],
-                'email' => $admin['email'],
-                'role' => $admin['role'],
-                'password' => Hash::make($admin['password']),
-            ]);
+        foreach ($users as $data) {
+            User::updateOrCreate(
+                ['email' => $data['email']], // prevents duplicate seeding
+                [
+                    'name' => $data['name'],
+                    'ngo' => $data['ngo'],
+                    'role' => $data['role'],
+                    'password' => Hash::make($data['password']),
+                ]
+            );
         }
     }
 }
-

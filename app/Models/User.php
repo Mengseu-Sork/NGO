@@ -21,6 +21,11 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+    public function isManager() { return $this->role === 'manager'; }
+    public function isED() { return $this->role === 'ed'; }
+    public function isBoard() { return $this->role === 'board'; }
+    public function isOperations() { return $this->role === 'operations'; }
+
 
     public function membership()
     {

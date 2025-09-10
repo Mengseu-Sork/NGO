@@ -176,11 +176,11 @@
                             <p class="text-gray-600 mt-4 text-5sm">
                                 {{ optional($membership->created_at)->format('d M Y') ?? 'N/A' }}
                             </p>
-                            <p class="px-2 py-1 text-white rounded
-                                @if($membership->status === 'pending') bg-orange-400
+                            <p
+                                class="px-2 py-1 text-white rounded
+                                @if ($membership->status === 'pending') bg-orange-400
                                 @elseif($membership->status === 'approved') bg-green-500
-                                @elseif($membership->status === 'cancel') bg-red-500
-                                @endif">
+                                @elseif($membership->status === 'cancel') bg-red-500 @endif">
                                 {{ ucfirst($membership->status) }}
                             </p>
                         </div>
@@ -259,7 +259,7 @@
                                 </div>
                                 <div class="p-6">
                                     @php
-                                        $uploads = $membership->membershipUploads ?? collect();
+                                        $uploads = $membership->upload ?? collect();
                                     @endphp
 
                                     @if ($uploads->isNotEmpty())
@@ -428,8 +428,8 @@
 
                                         <!-- Files Section -->
                                         <div>
-                                            @if ($membership->membershipUploads->count())
-                                                @foreach ($membership->membershipUploads as $app)
+                                            @if ($membership->upload->count())
+                                                @foreach ($membership->upload as $app)
                                                     <div class="flex items-center gap-2 mb-4">
                                                         <svg class="w-5 h-5 text-green-700" fill="none"
                                                             stroke="currentColor" viewBox="0 0 24 24">
@@ -443,17 +443,17 @@
                                                     </div>
                                                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                                         @foreach ([
-            'letter' => 'Recommendation Letter',
-            'constitution' => 'Constitution',
-            'activities' => 'Activities Report',
-            'funding' => 'Funding Proposal',
-            'registration' => 'Registration Certificate',
-            'strategic_plan' => 'Strategic Plan',
-            'fundraising_strategy' => 'Fundraising Strategy',
-            'audit_report' => 'Audit Report',
-            'signature' => 'Authorized Signature',
-            'goal' => 'Global audit report / Financial Report',
-        ] as $field => $label)
+                                                            'letter' => 'Letter',
+                                                            'mission_vision' => 'Mission & Vision',
+                                                            'constitution' => 'Constitution',
+                                                            'activities' => 'Activities',
+                                                            'funding' => 'Funding',
+                                                            'authorization' => 'Authorization',
+                                                            'strategic_plan' => 'Strategic Plan',
+                                                            'fundraising_strategy' => 'Fundraising Strategy',
+                                                            'signature' => 'Signature',
+                                                            'audit_report' => 'Audit Report',
+                                                        ] as $field => $label)
                                                             @if (!empty($app->$field))
                                                                 <a href="{{ asset('storage/' . $app->$field) }}"
                                                                     target="_blank"
