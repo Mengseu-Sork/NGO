@@ -40,7 +40,7 @@
                         <!-- Parent Button -->
                         <button @click="open = !open"
                             class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
-                                {{ request()->routeIs('admin.newMembership') || request()->routeIs('admin.membership') || request()->routeIs('admin.user') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                                {{ request()->routeIs('admin.newMembership') || request()->routeIs('admin.membership') || request()->routeIs('admin.user') || request()->routeIs('reports.membership') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                             <span>Memberships</span>
                             <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
@@ -64,15 +64,19 @@
                                 class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.user') ? 'font-semibold text-green-700' : '' }}">
                                 Non Membership
                             </a>
+                            <a href="{{ route('reports.membership') }}"
+                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('reports.membership') ? 'font-semibold text-green-700' : '' }}">
+                                Reports
+                            </a>
                         </div>
                     </div>
-
+                    
                     {{-- Event --}}
                     <div x-data="{ open: false }" class="relative">
                         <!-- Parent Button -->
                         <button @click="open = !open"
                             class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
-                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') || request()->routeIs('events.qr') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                             <span>Events</span>
                             <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
@@ -86,9 +90,9 @@
                             class="absolute left-0 mt-1 w-28 bg-white border rounded shadow-lg z-50 flex flex-col">
                             <a href="{{ route('events.calendar') }}"
                                 class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.calendar') ? 'font-semibold text-green-700' : '' }}">
-                                Calendar 
+                                Calendar
                             </a>
-                            <a href="{{ route('events.newEvent')}}"
+                            <a href="{{ route('events.newEvent') }}"
                                 class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.newEvent') ? 'font-semibold text-green-700' : '' }}">
                                 Plan Events
                             </a>
@@ -96,18 +100,16 @@
                                 class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.pastEvent') ? 'font-semibold text-green-700' : '' }}">
                                 Past Events
                             </a>
+                            <a href="{{ route('events.qr') }}"
+                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.qr') ? 'font-semibold text-green-700' : '' }}">
+                                QR Code
+                            </a>
                             <a href="#"
                                 class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.user') ? 'font-semibold text-green-700' : '' }}">
                                 Reports
                             </a>
                         </div>
                     </div>
-
-                    {{-- Report --}}
-                    <a href="{{ route('reports.membership') }}"
-                        class="font-semibold border-b-2 py-1 text-xs md:text-lg {{ request()->routeIs('reports.membership') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
-                        Reports
-                    </a>
                 @elseif(auth()->user()->role === 'user')
                     <a href="{{ route('profile') }}"
                         class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
@@ -126,7 +128,7 @@
             </nav>
             <!-- Right Section: Notification + User (Desktop Only) -->
             <div class="hidden md:flex items-center space-x-3 absolute right-6 top-8">
-    
+
                 <!-- User Avatar + Name -->
                 <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200">
@@ -140,7 +142,6 @@
             </div>
         </div>
 
-
         <!-- Mobile & Tablet Dropdown -->
         <div x-show="open" @click.away="open = false"
             class="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col space-y-2 px-6 py-4 md:hidden z-50">
@@ -149,22 +150,75 @@
                     class="py-2 {{ request()->routeIs('admin.dashboard') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
                     Dashboard
                 </a>
-                <a href="{{ route('admin.membership') }}"
-                    class="py-2 {{ request()->routeIs('admin.membership') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
-                    Old Memberships
-                </a>
-                <a href="{{ route('admin.user') }}"
-                    class="py-2 {{ request()->routeIs('admin.user') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
-                    Non Memberships
-                </a>
-                <a href="{{ route('admin.newMembership') }}"
-                    class="py-2 {{ request()->routeIs('admin.newMembership') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
-                    New Memberships
-                </a>
-                <a href="#"
-                    class="py-2 {{ request()->routeIs('') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
-                    Events
-                </a>
+                <div x-data="{ open: false }" class="relative">
+                    <!-- Parent Button -->
+                    <button @click="open = !open"
+                        class="font-semibold border-b-2 py-1 flex items-center space-x-2
+                                {{ request()->routeIs('admin.newMembership') || request()->routeIs('admin.membership') || request()->routeIs('admin.user') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                        <span>Memberships</span>
+                        <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="open" @click.away="open = false"
+                        class="absolute left-0 mt-1 w-40 bg-white border rounded shadow-lg z-50 flex flex-col">
+                        <a href="{{ route('admin.newMembership') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.newMembership') ? 'font-semibold text-green-700' : '' }}">
+                            New Membership
+                        </a>
+                        <a href="{{ route('admin.membership') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.membership') ? 'font-semibold text-green-700' : '' }}">
+                            Old Membership
+                        </a>
+                        <a href="{{ route('admin.user') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.user') ? 'font-semibold text-green-700' : '' }}">
+                            Non Membership
+                        </a>
+                        <a href="{{ route('reports.membership') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('reports.membership') ? 'font-semibold text-green-700' : '' }}">
+                            Reports
+                        </a>
+                    </div>
+                </div>
+                {{-- Event --}}
+                <div x-data="{ open: false }" class="relative">
+                    <!-- Parent Button -->
+                    <button @click="open = !open"
+                        class="font-semibold border-b-2 py-1 flex items-center space-x-2
+                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                        <span>Events</span>
+                        <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="open" @click.away="open = false"
+                        class="absolute left-0 mt-1 w-28 bg-white border rounded shadow-lg z-50 flex flex-col">
+                        <a href="{{ route('events.calendar') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.calendar') ? 'font-semibold text-green-700' : '' }}">
+                            Calendar
+                        </a>
+                        <a href="{{ route('events.newEvent') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.newEvent') ? 'font-semibold text-green-700' : '' }}">
+                            Plan Events
+                        </a>
+                        <a href="{{ route('events.pastEvent') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.pastEvent') ? 'font-semibold text-green-700' : '' }}">
+                            Past Events
+                        </a>
+                        <a href="#"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.user') ? 'font-semibold text-green-700' : '' }}">
+                            Reports
+                        </a>
+                    </div>
+                </div>
             @elseif(auth()->user()->role === 'user')
                 <a href="{{ route('profile') }}"
                     class="py-2 {{ request()->routeIs('profile') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">

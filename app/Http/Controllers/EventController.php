@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -31,7 +34,22 @@ class EventController extends Controller
             'organizer'   => 'nullable|string|max:255',
         ]);
 
-        Event::create($request->all());
+        $event = Event::create($request->all());
+        $registrationLink = route('events.register', $event->id);
+        $event->registration_link = $registrationLink;
+
+        // 3. Generate QR code with Endroid
+        $qr = QrCode::create($registrationLink)->setSize(300);
+        $writer = new PngWriter();
+        $result = $writer->write($qr);
+
+        // 4. Save QR code file in storage/public/qrcodes
+        $fileName = 'qrcodes/event_' . $event->id . '.png';
+        Storage::disk('public')->put($fileName, $result->getString());
+
+        // 5. Save path to DB
+        $event->qr_code_path = $fileName;
+        $event->save();
 
         return redirect()->route('events.newEvent')->with('success', 'Event created successfully.');
     }
@@ -85,4 +103,12 @@ class EventController extends Controller
 
         return view('events.pastEvent', compact('events'));
     }
+
+    public function register()
+    {
+        $events = Event::all();
+        return view('events.qr', compact('events'));
+    }
+
+    
 }

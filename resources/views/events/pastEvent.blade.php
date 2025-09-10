@@ -93,7 +93,7 @@
                 </table>
             </div>
         @else
-            <p class="p-8 text-center text-gray-500 text-lg">No events found. Click "Add Event" to get started.</p>
+            <p class="p-8 text-center text-gray-500 text-lg">No events found.</p>
         @endif
     </div>
 

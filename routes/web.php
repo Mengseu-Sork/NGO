@@ -14,6 +14,7 @@ use App\Http\Controllers\MembershipUploadController;
 use App\Http\Controllers\MembershipReportController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\RegistrationController;
 
 
 // Authentication routes
@@ -119,4 +120,14 @@ Route::middleware(['auth'])->group(function () {
     // Past events route
     Route::get('/events/pastEvent', [EventController::class, 'showPast'])->name('events.pastEvent');
 
+    // Event registration route
+    Route::get('/events/qr', [EventController::class, 'register'])->name('events.qr');
+
+    // Admin view of attendees
+    Route::get('/registrations/index', [RegistrationController::class, 'index'])->name('registrations.index');
 });
+
+// Event registration management routes
+Route::get('/events/{event}/register', [RegistrationController::class, 'create'])->name('events.register');
+Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->name('events.register.store');
+Route::get('/registrations/thank', [RegistrationController::class, 'thankYou'])->name('registrations.thank');
