@@ -5,7 +5,7 @@
         <div
             class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 sm:p-6 bg-green-600 text-white rounded-t-xl">
             <h2 class="text-xl sm:text-2xl font-bold">
-                All Past Events
+                All Events
             </h2>
         </div>
     </div>
@@ -18,23 +18,6 @@
                         <h3 class="font-bold text-lg md:text-xl truncate">
                             {{ strlen($event->title) > 30 ? substr($event->title, 0, 30) . '...' : $event->title }}
                         </h3>
-                        <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" class="p-1 rounded-full hover:bg-green-700 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <circle cx="12" cy="5" r="1.5" />
-                                    <circle cx="12" cy="12" r="1.5" />
-                                    <circle cx="12" cy="19" r="1.5" />
-                                </svg>
-                            </button>
-
-                            <!-- Dropdown -->
-                            <div x-show="open" @click.away="open = false"
-                                class="absolute right-0 mt-2 w-20 bg-white border border-gray-200 rounded-lg shadow-lg z-20 text-sm">
-                                <a href="#" onclick='openEventDetailModal(@json($event))'
-                                    class="block px-3 py-1 text-blue-600 hover:bg-blue-100">View</a>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Card Body -->
@@ -89,7 +72,6 @@
                             </p>
                         </div>
 
-
                         <!-- Organizer -->
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,16 +81,22 @@
                             <p><span class="font-semibold">Organizer:</span> {{ $event->organizer ?? '-' }}</p>
                         </div>
                     </div>
+                    <!-- Card Footer -->
+                    <div class="px-4 py-3 bg-gray-100 text-right">
+                        <button onclick='openEventDetailModal(@json($event))'
+                            class="px-3 py-1 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition">
+                            View Details
+                        </button>
+                    </div>
                 </div>
             @endforeach
         </div>
     @else
-        <p class="p-8 text-center text-gray-500 text-lg">No events found.</p>
+        <p class="p-8 text-center text-gray-500 text-lg">No events found. Click "Add Event" to get started.</p>
     @endif
 
     <!--- View --->
-    <div id="eventDetailModal"
-        class="fixed inset-0 flex items-center justify-center bg-black/50 hidden z-50 p-2">
+    <div id="eventDetailModal" class="fixed inset-0 flex items-center justify-center bg-black/50 hidden z-50 p-2">
 
         <div
             class="bg-white rounded-2xl shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-xl relative overflow-hidden max-h-[95vh] overflow-y-auto transform transition-all duration-300 custom-scrollbar">
@@ -191,8 +179,7 @@
                         </svg>
                         <span class="font-semibold">Files:</span>
                     </div>
-                    <div id="detailFiles"
-                        class="text-sm md:text-base text-gray-600">
+                    <div id="detailFiles" class="text-sm md:text-base text-gray-600">
                     </div>
                 </div>
 
@@ -208,6 +195,49 @@
                     </div>
                     <div id="detailImages">
                     </div>
+                </div>
+            </div>
+            <div class="mt-2 p-4 bg-gradient-to-r from-green-500 to-green-700 shadow-md flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-white">
+                    Are you interested in joining this Event?
+                </h2>
+                <button onclick="document.getElementById('emailModal').classList.remove('hidden')"
+                    class="ml-4 px-4 py-2 bg-white text-green-700 font-medium rounded-lg shadow hover:bg-green-100 transition">
+                    Click Here
+                </button>
+            </div>
+            
+            <!-- Modal Email-->
+            <div id="emailModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-lg p-6 w-full max-w-md relative">
+                    <button onclick="document.getElementById('emailModal').classList.add('hidden')"
+                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">&times;</button>
+                    <h3 class="text-xl font-semibold mb-4">Send Email to Organizer</h3>
+
+                    <form action="{{ route('send.email') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Your Name</label>
+                            <input type="text" name="name" class="w-full border px-3 py-2 rounded" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Your Email</label>
+                            <input type="email" name="email" class="w-full border px-3 py-2 rounded" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700">Message</label>
+                            <textarea name="message" class="w-full border px-3 py-2 rounded" rows="4" required></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                            Send Email
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -310,7 +340,7 @@
             detailImages.innerHTML = '';
             if (event.images && event.images.length > 0) {
                 const grid = document.createElement('div');
-                grid.className = 'grid grid-cols-2 md:grid-cols-3 gap-3';
+                grid.className = 'grid grid-cols-2 md:grid-cols-3 gap-3 mt-4';
                 event.images.forEach(img => {
                     const imgEl = document.createElement('img');
                     imgEl.src = `/storage/${img.image_path}`;

@@ -24,11 +24,12 @@
             <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center sm:text-left">
                 {{ $startOfMonth->format('F Y') }}
             </h2>
-
-            <button onclick="openEventModal()"
-                class="px-3 sm:px-4 py-1 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition text-sm sm:text-base">
-                + Add Event
-            </button>
+            @if (auth()->user()->role === 'admin')
+                <button onclick="openEventModal()"
+                    class="px-3 sm:px-4 py-1 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition text-sm sm:text-base">
+                    + Add Event
+                </button>
+            @endif
         </div>
 
         {{-- Calendar Grid --}}
@@ -56,7 +57,7 @@
 
                     <div class="relative h-20 sm:h-24 md:h-32 p-1 sm:p-2 border-b border-r border-green-300 cursor-pointer
                             {{ !$isCurrentMonth ? 'text-gray-400 bg-gray-100' : ($isWeekend ? 'bg-gray-50' : 'bg-white') }}"
-                        onclick="openEventModal('{{ $date }}')">
+                             @if (auth()->user()->role === 'admin') onclick="openEventModal('{{ $date }}')" @endif>
 
                         {{-- Day Number --}}
                         <div class="absolute top-1 sm:top-2 left-1 sm:left-2 text-xs sm:text-sm">
@@ -166,6 +167,12 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Organizer</label>
                     <input type="text" name="organizer"
+                        class="border rounded-md p-2 w-full focus:ring focus:ring-blue-200">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">Organizer Email</label>
+                    <input type="email" name="organizer_email"
                         class="border rounded-md p-2 w-full focus:ring focus:ring-blue-200">
                 </div>
 

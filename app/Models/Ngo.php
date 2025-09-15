@@ -9,5 +9,10 @@ class Ngo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ngo_name'];
+    protected $fillable = ['ngo_name', 'abbreviation'];
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
 }

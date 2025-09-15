@@ -70,8 +70,8 @@ class AdminController extends Controller
             abort(403);
         }
 
-        $membership = Membership::with('user', 'networks', 'focalPoints', 'applications')
-            ->findOrFail($id);
+        $membership = Membership::with('user', 'networks', 'focalPoints', 'applications', 'registrations')
+    ->findOrFail($id);
         if (!$membership->read_at) {
             $membership->update(['read_at' => now()]);
         }
@@ -95,7 +95,8 @@ class AdminController extends Controller
         $membership = NewMembership::with([
             'user',
             'membershipUploads.networks',
-            'membershipUploads.focalPoints'
+            'membershipUploads.focalPoints',
+            'registrations.event'
         ])
             ->where('id', $id)
             ->firstOrFail();

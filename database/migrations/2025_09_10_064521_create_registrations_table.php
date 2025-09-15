@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone')->nullable();
             $table->string('organization')->nullable();
+            $table->string('position')->nullable();
+            $table->foreignId('ngo_id')->nullable()->constrained('ngos')->onDelete('set null');
+            $table->foreignId('new_membership_id')->nullable()->constrained('new_memberships')->onDelete('set null');
+            $table->foreignId('membership_id')->nullable()->constrained('memberships')->onDelete('set null');
             $table->timestamps();
         });
     }

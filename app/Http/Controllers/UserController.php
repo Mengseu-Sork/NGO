@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Membership;
 use App\Models\NewMembership;
+use App\Models\Registration;
 
 class UserController extends Controller
 {
@@ -31,15 +32,31 @@ class UserController extends Controller
 
     public function newProfile()
     {
-       $memberships = NewMembership::with([
-            'user', 
+        $memberships = NewMembership::with([
+            'user',
             'membershipUploads.networks',
             'membershipUploads.focalPoints'
         ])
-        ->where('user_id', auth()->id())
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('users.newProfile', compact('memberships'));
+    }
+
+    public function report()
+    {
+        $userId = auth()->id();
+
+        $membershipIds = Membership::where('user_id', $userId)->pluck('id')->toArray();
+        $newMembershipIds = NewMembership::where('user_id', $userId)->pluck('id')->toArray();
+
+        $registrations = Registration::with('event')
+            ->whereIn('membership_id', $membershipIds)
+            ->orWhereIn('new_membership_id', $newMembershipIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('reports.eventReport', compact('registrations'));
     }
 }

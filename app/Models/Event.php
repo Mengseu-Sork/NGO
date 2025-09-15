@@ -17,10 +17,21 @@ class Event extends Model
         'end_time',
         'location',
         'organizer',
+        'organizer_email',
     ];
     
     public function registrations()
     {
         return $this->hasMany(Registration::class);
+    }
+
+    public function files()
+    {
+        return $this->hasMany(EventFile::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(EventImage::class);
     }
 }

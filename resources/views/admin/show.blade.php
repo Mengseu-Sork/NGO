@@ -223,7 +223,7 @@
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-gray-900">Position</h3>
-                                    <p class="text-gray-700">{{ $membership->alt_name }}</p>
+                                    <p class="text-gray-700">Director</p>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +252,8 @@
                                             @foreach ($membership->networks as $network)
                                                 <div class="network-item flex items-center gap-3 p-3 rounded-lg">
                                                     <div class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                                                    <span class="text-gray-800 font-medium">{{ $network->network_name }}</span>
+                                                    <span
+                                                        class="text-gray-800 font-medium">{{ $network->network_name }}</span>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -284,7 +285,8 @@
                                         <div class=" grid grid-cols-1 lg:grid-cols-2 gap-3">
                                             @foreach ($membership->focalPoints as $focal)
                                                 <div class="focal-point-card p-4 rounded-lg">
-                                                    <h4 class="font-semibold text-gray-900">{{ $focal->name }}  ( {{ $focal->position }} )</h4>
+                                                    <h4 class="font-semibold text-gray-900">{{ $focal->name }} (
+                                                        {{ $focal->position }} )</h4>
                                                     <p class="text-gray-600 font-medium">{{ $focal->email }}</p>
                                                     <p class="text-gray-700 text-sm">{{ $focal->network_name }}</p>
                                                 </div>
@@ -530,18 +532,94 @@
                                     <p class="text-gray-600 italic">No applications found.</p>
                                 </div>
                             @endif
-                            <a href="{{ route('admin.membership') }}"
-                                class="inline-flex items-center gap-2 px-4 py-2 mb-2 mt-6 bg-green-600 hover:bg-green-700 text-white 
-                            rounded-md font-medium transition-colors shadow-sm">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 19l-7-7 7-7">
-                                    </path>
-                                </svg>
-                                Back
-                            </a>
                         </div>
                     </div>
+                    <div
+                        class="bg-white rounded-xl card-shadow border border-gray-200 overflow-hidden mb-8 animate-fade-in animate-delay-3">
+                        <div class="section-header px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="p-2 icon-medium-green rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 12l2 2l4-4m1-5H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900">Events</h3>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-green-300">
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            #
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Name
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Email
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Phone
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Position</th>
+                                            <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Events Name</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Date</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                            Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($membership->registrations as $i => $reg)
+                                            <tr class="hover:bg-green-50 transition-colors">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $i + 1 }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $reg->name }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $reg->email }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $reg->phone }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $reg->position }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $reg->event->title ?? 'No Event' }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    {{ $reg->created_at->format('D-M-Y') }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                    @if (strlen($reg->event->location ?? 'N/A') > 20)
+                                                        {{ substr($reg->event->location, 0, 20) . '...' }}
+                                                    @else
+                                                        {{ $reg->event->location ?? 'N/A' }}
+                                                    @endif</td>
+                                            </tr>
+                                        @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.membership') }}"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white 
+                    rounded-md font-medium transition-colors shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
+                        </svg>
+                        Back
+                    </a>
                 </div>
             </div>
         @endsection

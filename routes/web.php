@@ -25,7 +25,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/', [homeController::class, 'index'])->name('home');
 
+// Public Event Registration (no auth required)
+Route::get('/events/{event}/register', [RegistrationController::class, 'create'])->name('events.register');
+Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->name('events.register.store');
+Route::get('/registrations/thank', [RegistrationController::class, 'thankYou'])->name('registrations.thank');
 
+// Optional: direct QR preview
+Route::get('/events/qr', [EventController::class, 'register'])->name('events.qr');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -120,14 +126,20 @@ Route::middleware(['auth'])->group(function () {
     // Past events route
     Route::get('/events/pastEvent', [EventController::class, 'showPast'])->name('events.pastEvent');
 
-    // Event registration route
-    Route::get('/events/qr', [EventController::class, 'register'])->name('events.qr');
+    Route::get('/events/{event}/download-qr', [EventController::class, 'downloadQr'])->name('events.downloadQr');
 
     // Admin view of attendees
     Route::get('/registrations/index', [RegistrationController::class, 'index'])->name('registrations.index');
-});
+    Route::get('/registrations/{eventId}', [RegistrationController::class, 'show'])->name('registrations.showAll');
 
-// Event registration management routes
-Route::get('/events/{event}/register', [RegistrationController::class, 'create'])->name('events.register');
-Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->name('events.register.store');
-Route::get('/registrations/thank', [RegistrationController::class, 'thankYou'])->name('registrations.thank');
+    // Event files upload
+    Route::post('/events/{event}/files', [EventController::class, 'addFiles'])->name('events.addFiles');
+    Route::post('/events/{event}/images', [EventController::class, 'addImages'])->name('events.addImages');
+
+    // User view of upcoming events
+    Route::get('/events/userEvent', [EventController::class, 'newEvent'])->name('events.userEvent');
+    Route::get('/reports/eventReport', [UserController::class, 'report'])->name('reports.eventReport');
+
+    Route::post('/send-email', [EventController::class, 'sendEmail'])->name('send.email');
+
+});

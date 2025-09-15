@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Memberships Dashboard')
+@section('title', 'Memberships')
 
 @section('content')
     <div class="max-w-full mx-auto">
@@ -81,7 +81,7 @@
                                 Email</th>
                             <th
                                 class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
-                                Position</th>
+                                Phone</th>
                             <th
                                 class="px-2 py-2 md:px-6 md:py-3 text-xs md:text-sm font-semibold border uppercase tracking-wider">
                                 Networks</th>
@@ -109,7 +109,7 @@
                                 <td class="px-2 py-2 md:px-6 md:py-3 whitespace-nowrap text-sm border text-gray-700">
                                     {{ $membership->director_email ?? 'N/A' }}</td>
                                 <td class="px-2 py-2 md:px-6 md:py-3 whitespace-nowrap text-sm border text-gray-700">
-                                    {{ $membership->alt_name ?? 'N/A' }}</td>
+                                    {{ $membership->alt_phone ?? 'N/A' }}</td>
                                 <td
                                     class="px-2 py-2 md:px-6 md:py-3 whitespace-normal text-sm border max-h-26 overflow-y-auto text-gray-700">
                                     @if ($membership->networks->count())

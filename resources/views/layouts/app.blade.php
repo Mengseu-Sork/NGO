@@ -9,6 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </head>
 
@@ -70,13 +74,13 @@
                             </a>
                         </div>
                     </div>
-                    
+
                     {{-- Event --}}
                     <div x-data="{ open: false }" class="relative">
                         <!-- Parent Button -->
                         <button @click="open = !open"
                             class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
-                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') || request()->routeIs('events.qr') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') || request()->routeIs('events.qr') || request()->routeIs('registrations.index') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                             <span>Events</span>
                             <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
@@ -104,25 +108,60 @@
                                 class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.qr') ? 'font-semibold text-green-700' : '' }}">
                                 QR Code
                             </a>
-                            <a href="#"
-                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.user') ? 'font-semibold text-green-700' : '' }}">
+                            <a href="{{ route('registrations.index') }}"
+                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('registrations.index') ? 'font-semibold text-green-700' : '' }}">
                                 Reports
                             </a>
                         </div>
                     </div>
                 @elseif(auth()->user()->role === 'user')
-                    <a href="{{ route('profile') }}"
+                    @php
+                        $user = Auth::user();
+                        $hasNewMembership = \App\Models\NewMembership::where('user_id', $user->id)->exists();
+                        $hasMembership = \App\Models\Membership::where('user_id', $user->id)->exists();
+
+                        $homeRoute = $hasNewMembership ? 'newProfile' : 'profile';
+                    @endphp
+
+                    <a href="{{ route($homeRoute) }}"
                         class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
-                                {{ request()->routeIs('profile') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                        {{ request()->routeIs($homeRoute) ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                         Home
                     </a>
+
+                    <div x-data="{ open: false }" class="relative">
+                        <!-- Parent Button -->
+                        <button @click="open = !open"
+                            class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
+                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.userEvent') || request()->routeIs('reports.eventReport') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                            <span>Events</span>
+                            <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div x-show="open" @click.away="open = false"
+                            class="absolute left-0 mt-1 w-28 bg-white border rounded shadow-lg z-50 flex flex-col">
+                            <a href="{{ route('events.calendar') }}"
+                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.calendar') ? 'font-semibold text-green-700' : '' }}">
+                                Calendar
+                            </a>
+                            <a href="{{ route('events.userEvent') }}"
+                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.userEvent') ? 'font-semibold text-green-700' : '' }}">
+                                New Events
+                            </a>
+                            <a href="{{ route('reports.eventReport') }}"
+                                class="px-3 py-2 text-xs md:text-sm text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('reports.eventReport') ? 'font-semibold text-green-700' : '' }}">
+                                Reports
+                            </a>
+                        </div>
+                    </div>
                     <a href="#"
                         class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2 {{ request()->routeIs('') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
-                        Events
-                    </a>
-                    <a href="#"
-                        class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2 {{ request()->routeIs('') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
-                        My Report
+                        Membership Report
                     </a>
                 @endif
             </nav>
@@ -189,7 +228,7 @@
                     <!-- Parent Button -->
                     <button @click="open = !open"
                         class="font-semibold border-b-2 py-1 flex items-center space-x-2
-                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
+                                {{ request()->routeIs('events.calendar') || request()->routeIs('events.newEvent') || request()->routeIs('events.pastEvent') || request()->routeIs('registrations.index') ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                         <span>Events</span>
                         <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -213,17 +252,27 @@
                             class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('events.pastEvent') ? 'font-semibold text-green-700' : '' }}">
                             Past Events
                         </a>
-                        <a href="#"
-                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('admin.user') ? 'font-semibold text-green-700' : '' }}">
+                        <a href="{{ route('registrations.index') }}"
+                            class="px-3 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 {{ request()->routeIs('registrations.index') ? 'font-semibold text-green-700' : '' }}">
                             Reports
                         </a>
                     </div>
                 </div>
             @elseif(auth()->user()->role === 'user')
-                <a href="{{ route('profile') }}"
-                    class="py-2 {{ request()->routeIs('profile') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
+                @php
+                    $user = Auth::user();
+                    $hasNewMembership = \App\Models\NewMembership::where('user_id', $user->id)->exists();
+                    $hasMembership = \App\Models\Membership::where('user_id', $user->id)->exists();
+
+                    $homeRoute = $hasNewMembership ? 'newProfile' : 'profile';
+                @endphp
+
+                <a href="{{ route($homeRoute) }}"
+                    class="font-semibold border-b-2 py-1 text-xs md:text-lg flex items-center space-x-2
+                    {{ request()->routeIs($homeRoute) ? 'text-green-700 border-green-700' : 'text-gray-600 border-transparent hover:text-green-600 hover:border-green-600' }}">
                     Home
                 </a>
+
                 <a href="#"
                     class="py-2 {{ request()->routeIs('') ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-600' }}">
                     Events
@@ -263,6 +312,36 @@
     </main>
 
     @stack('scripts')
+    <style>
+        /* Small & clean scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 2px;
+            /* Thin scrollbar */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+            /* No background */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #9ca3af;
+            /* Tailwind gray-400 */
+            border-radius: 9999px;
+            /* Fully rounded */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #6b7280;
+            /* Darker on hover (gray-500) */
+        }
+
+        /* Firefox support */
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #9ca3af transparent;
+        }
+    </style>
 </body>
 
 </html>

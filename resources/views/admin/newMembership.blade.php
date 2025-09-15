@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Memberships Dashboard')
+@section('title', 'Memberships')
 
 @section('content')
     <div class="max-w-full mx-auto">

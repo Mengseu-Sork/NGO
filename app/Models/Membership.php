@@ -37,5 +37,10 @@ class Membership extends Model
     {
         return $this->hasMany(MembershipApplication::class);
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'membership_id');
+    }
 }
 

@@ -18,12 +18,30 @@ return new class extends Migration
             $table->time('end_time')->nullable();    // End time
             $table->string('location')->nullable();
             $table->string('organizer')->nullable();
+            $table->string('organizer_email')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('event_files', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->string('file_path');
+            $table->string('file_type');
+            $table->timestamps();
+        });
+
+        Schema::create('event_images', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
 
     public function down()
     {
+        Schema::dropIfExists('event_images');
+        Schema::dropIfExists('event_files');
         Schema::dropIfExists('events');
     }
 };

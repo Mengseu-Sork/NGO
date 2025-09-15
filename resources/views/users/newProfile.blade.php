@@ -259,7 +259,7 @@
                                 </div>
                                 <div class="p-6">
                                     @php
-                                        $uploads = $membership->upload ?? collect();
+                                        $uploads = $membership->membershipUploads ?? collect();
                                     @endphp
 
                                     @if ($uploads->isNotEmpty())
@@ -428,8 +428,8 @@
 
                                         <!-- Files Section -->
                                         <div>
-                                            @if ($membership->upload->count())
-                                                @foreach ($membership->upload as $app)
+                                            @if ($membership->membershipUploads->count())
+                                                @foreach ($membership->membershipUploads as $app)
                                                     <div class="flex items-center gap-2 mb-4">
                                                         <svg class="w-5 h-5 text-green-700" fill="none"
                                                             stroke="currentColor" viewBox="0 0 24 24">

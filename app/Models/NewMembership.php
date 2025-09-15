@@ -52,4 +52,9 @@ class NewMembership extends Model
     {
         return $this->status === 'rejected';
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'membership_id');
+    }
 }

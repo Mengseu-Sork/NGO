@@ -45,6 +45,6 @@ class CalendarController extends Controller
         ]);
 
         Event::create($request->all());
-        return redirect()->back()->with('success', 'Event created successfully!');
+        return redirect()->route('events.calendar')->with('success', 'Event created successfully!');
     }
 }
