@@ -75,7 +75,7 @@
 
                                         <!-- Dropdown Menu -->
                                         <div x-show="open" @click.away="open = false"
-                                            class="absolute right-2 sm:right-8 -mt-4 w-28 bg-white border border-gray-200 rounded-lg shadow-xl z-10 flex flex-col p-1 space-y-1 text-sm">
+                                            class="absolute right-2 sm:right-8 -mt-6 w-20 bg-white border border-gray-200 rounded-lg shadow-xl z-10 flex flex-col p-1 space-y-1 text-sm">
                                             <!-- View Details -->
                                             <a href="{{ route('registrations.showAll', $event->id) }}"
                                                 class="flex items-center px-2 py-1 text-sm text-blue-700 hover:bg-blue-100 rounded transition">

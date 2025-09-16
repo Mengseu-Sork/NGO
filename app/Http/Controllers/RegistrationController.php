@@ -75,7 +75,6 @@ class RegistrationController extends Controller
     {
         // Get only the last finished event
         $events = Event::with('registrations')
-            ->whereDate('end_date', '<', Carbon::today())
             ->orderBy('end_date', 'desc')
             ->get();
 
@@ -85,7 +84,7 @@ class RegistrationController extends Controller
 
     public function show($eventId)
     {
-        $event = Event::with('registrations')->whereDate('end_date', '<', Carbon::today())->findOrFail($eventId);
+        $event = Event::with('registrations')->findOrFail($eventId);
         $registrations = $event->registrations;
 
         return view('registrations.showAll', compact('event', 'registrations'));
